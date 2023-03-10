@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block head %}
+<body>
+<div class="container">
+    <img src="{{url_for('static',filename='logo.jpg')}}" alt="Image Description">
+    <br>
+    <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search...">
+    <button onclick="generatePDF()">Generate PDF</button>
+    <button onclick="generateExcel()">Generate Excel</button>
+    <br><br>
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>John Doe</td>
+                <td>john.doe@example.com</td>
+                <td>(123) 456-7890</td>
+                <td>123 Main St, Anytown USA</td>
+                <td><button onclick="showDetails('John Doe', 'john.doe@example.com', '(123) 456-7890', '123 Main St, Anytown USA')">Details</button></td>
+            </tr>
+            <tr>
+                <td>Jane Smith</td>
+                <td>jane.smith@example.com</td>
+                <td>(555) 555-5555</td>
+                <td>456 Maple Ave, Anytown USA</td>
+                <td><button onclick="showDetails('John Doe', 'john.doe@example.com', '(123) 456-7890', '123 Main St, Anytown USA')">Details</button></td>
+            </tr>
+            <tr>
+                <td>John Doe</td>
+                <td>john.doe@example.com</td>
+                <td>(123) 456-7890</td>
+                <td>123 Main St, Anytown USA</td>
+                <td><button onclick="showDetails('John Doe', 'john.doe@example.com', '(123) 456-7890', '123 Main St, Anytown USA')">Details</button></td>
+            </tr>
+            <tr>
+                <td>Jane Smith</td>
+                <td>jane.smith@example.com</td>
+                <td>(555) 555-5555</td>
+                <td>456 Maple Ave, Anytown USA</td>
+                <td><button onclick="showDetails('John Doe', 'john.doe@example.com', '(123) 456-7890', '123 Main St, Anytown USA')">Details</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

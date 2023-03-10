@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Verification Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+        .emoji {
+            display: inline-block;
+            animation: animateThumbsUp 1s ease-in-out;
+        }
+        @keyframes animateThumbsUp {
+            0% {
+                transform: translateY(0);
+            }
+            25% {
+                transform: translateY(-10px);
+            }
+            50% {
+                transform: translateY(0);
+            }
+            75% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    {% if success %}
+        <h2 class="success">Congratulations!</h2>
+        <p>Your email has been verified <span class="emoji">👍</span>. You can now log in to your account <a href="/login">Click Here</a></p>
+    {% else %}
+        <h2 class="error">Verification Done</h2>
+        <p>Account Already Activated.</p>
+    {% endif %}
+</body>
+</html>

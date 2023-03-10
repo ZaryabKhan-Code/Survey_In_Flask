@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Activation Email</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"/>
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #333;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .jumbotron {
+      background-color: #f2f2f2;
+      padding: 30px;
+      border-radius: 4px;
+      text-align: center;
+    }
+    
+    .jumbotron h1 {
+      font-size: 36px;
+      font-weight: bold;
+      color: #1a1a1a;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+    
+    .jumbotron p {
+      font-size: 18px;
+      line-height: 1.5;
+      color: #333;
+      margin-bottom: 30px;
+    }
+    
+  footer {
+      text-align: center;
+      margin-top: 50px;
+      padding-top: 20px;
+      border-top: 1px solid #ccc;
+    }
+    
+    footer p {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 0;
+    }
+    
+    footer p:last-child {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="jumbotron">
+          <h1 class="display-4">Welcome to Survey</h1>
+          <p class="lead">Dear {{name}},</p>
+          <p class="lead">Thank you for signing up in Admin Portal. To activate your account, please click the link below:</p>
+          <a href="{{url}}">Activate Account</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Need Help?</h5>
+            <p class="card-text">If you have any questions or concerns, please don't hesitate to contact our support team at support@survey.com.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <hr>
+        <footer>
+          <p>Survey &copy; 2023</p>
+          <p>Tech By Zaryab Khan</p>
+        </footer>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

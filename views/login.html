@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block head %}
+<title>Login Page</title>
+<body>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-sm-8">
+        <form class="form" action="{{ url_for('admin_model.admin_login') }}" method="post">
+          <li class="nav">
+            <select onchange="changeLanguage(this.value)">
+              <option value="en">English</option>
+              <option value="es">Español</option>
+          </select>
+          </li>
+          <h2 class="text-center">Login</h2>
+          {% if error_message %}
+          <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ error_message }}
+          </div>
+          {% elif success_message %}
+          <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ success_message }}
+          </div>
+        {% endif %}    
+          <hr>
+          <div class="form-group">
+            <label class="required" for="email">Email:</label>
+            <input type="text" id="email" name="email" placeholder="Enter your username">
+          </div>
+          <div class="form-group">
+            <label class="required" for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password">
+          </div>
+          <input type="submit" value="Login">
+        </form>
+      </div>
+    </div>
+  </div>
+ </body>
+{% endblock %}
