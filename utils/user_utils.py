@@ -3,10 +3,12 @@ from config.config import *
 from flask import *
 import re
 
-import re
-
 def LoadUserById(user_id):
     return User.query.get(int(user_id))
+
+def get_user_id_card(id):
+    return User.query.filter_by(id_card=id).first()
+
 
 def validate_id_card(id_card):
     regular_pattern = re.compile("^\d{1}-\d{4}-\d{5}$")

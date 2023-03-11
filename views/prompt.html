@@ -43,9 +43,15 @@
               </button>
             </div>
             <div class="modal-body">
-              <form action="/user/create_room" method="post">
+              <form action="{{url_for('user_model.id_card_login')}}" method="post">
                 <div class="form-group">
                   <label for="roomNumber">Personal ID Card </label>
+                  {% if error_message %}
+                  <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{ error_message }}
+                  {% endif %}
+                  </div>
                   <div>
                     <p class="text-warning small">Note: Not a member of the Panamenista Part. Ignore This</p>
                   </div>                                 
@@ -69,7 +75,7 @@
                 </div>
                 <div class="modal-footer">
                     <a type="submit" class="btn btn-secondary" href="">Ignore</a>
-                    <button type="submit" class="btn btn-primary" id="createRoomBtn" disabled>Validate</button>
+                    <button type="submit" class="btn btn-primary" id="createRoomBtn">Validate</button>
                 </div>
               </form>
             </div>
