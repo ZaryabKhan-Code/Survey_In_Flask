@@ -49,7 +49,7 @@ def admin_register():
     return render_template('register.html')
 
 
-@admin_router.route('/', methods=['POST', 'GET'])
+@admin_router.route('/admin', methods=['POST', 'GET'])
 def admin_login():
     success_message = request.args.get('success_message')
     if current_user.is_authenticated:
@@ -128,4 +128,5 @@ def admin_logout():
     success_message='User Successfully Logout'
     logout_user()
     return redirect(url_for('admin_model.admin_login',success_message=success_message))
+    
     

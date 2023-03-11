@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Page</title>     
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </head>
+    <style>
+    .input-status {
+    font-size: 1em;
+    margin-top: 0.5em;
+  }
+
+  .input-status .valid {
+    color: green;
+  }
+
+  .input-status .invalid {
+    color: red;
+  }
+  </style>
+  <body>
+    <div class="container mt-3">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Note: </strong> This is a notification message. If popup is missing please refresh the page.
+        </div>
+      </div>
+
+    
+    <div class="modal fade" id="createRoomModal" tabindex="-1" role="dialog" aria-labelledby="createRoomModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="createRoomModalLabel">Member Validation</h5>
+              <div id="google_translate_element" hidden></div>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true" onclick="showAlert()">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="/user/create_room" method="post">
+                <div class="form-group">
+                  <label for="roomNumber">Personal ID Card </label>
+                  <div>
+                    <p class="text-warning small">Note: Not a member of the Panamenista Part. Ignore This</p>
+                  </div>                                 
+                  <div class="selected-lang" style="width:20%">                 
+                    <select onchange="changeLanguage(this.value)">
+                        <option value="en"> English</option>
+                        <option value="es">Spanish</option>
+                    </select>                
+                </div> 
+                <br>
+                <div>
+                  <p class="input-status" id="id_card_status"></p>
+                </div> 
+                  <div class="input-group">  
+                    <input type="text" class="form-control" id="id_card" name="id_card" required>
+                  </div>
+                  <div>
+                    <p class="text-dark small"> Example: 0-8042-20167. If necessary, the 0 should be 1 to 15 or a letter
+                      .</p>
+                  </div> 
+                </div>
+                <div class="modal-footer">
+                    <a type="submit" class="btn btn-secondary" href="">Ignore</a>
+                    <button type="submit" class="btn btn-primary" id="createRoomBtn" disabled>Validate</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+<script>
+</script>
+<style>
+  .invalid { border-color: red; }
+  .valid { border-color: green; }
+</style>
+</html>

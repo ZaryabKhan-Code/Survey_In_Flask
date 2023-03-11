@@ -3,6 +3,7 @@ from flask_login import *
 from flask_mail import *
 db = SQLAlchemy()
 login_manager = LoginManager()
+login_manager2 = LoginManager()
 mail = Mail()
 Key = 'Survey_form'
 def init_app(app):
@@ -17,4 +18,5 @@ def init_app(app):
     db.init_app(app)
     mail.init_app(app)
     login_manager.init_app(app)
+    login_manager2.init_app(app)
 

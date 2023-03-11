@@ -1,0 +1,178 @@
+
+
+body{
+    background-color: purple;
+		font-family: Arial, sans-serif;
+}
+form {
+    display: block;
+    margin: 0 auto;
+    max-width: 500px;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+}
+
+a {
+  text-decoration: none;
+}
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Style for the form elements */ 
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+/* Style for the submit button */
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+
+/* Style for the radio buttons */
+input[type=radio] {
+    margin-right: 10px;
+}
+
+/* Style for the container that contains the drop-down menu */
+.select-container {
+    margin-top: 6px;
+    margin-bottom: 16px;
+}
+
+/* Style for the label */
+label {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Style for the error message */
+.error {
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 6px;
+    margin-bottom: 16px;
+}
+input.error {
+    border-color: red;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+form {
+  display: grid;
+  place-content: center;
+  min-height: 100vh;
+}
+
+.form-control {
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 1.1;
+  display: grid;
+  grid-template-columns: 1em auto;
+  gap: 0.5em;
+}
+
+.form-control + .form-control {
+  margin-top: 1em;
+}
+
+.form-control:focus-within {
+  color: var(--form-control-color);
+}
+
+input[type="radio"] {
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  /* Remove most all native input styles */
+  appearance: none;
+  background-color: var(--form-background);
+  /* Not removed via appearance */
+  margin: 0;
+
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid currentColor;
+  border-radius: 50%;
+  transform: translateY(-0.075em);
+
+  display: grid;
+  place-content: center;
+}
+
+input[type="radio"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--form-control-color);
+  /* Windows High Contrast Mode */
+  background-color: CanvasText;
+}
+
+input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
+input[type="radio"]:focus {
+  outline: max(1px, 0.15em) solid currentColor;
+  outline-offset: max(1px, 0.15em);
+}
+
+.parent {
+  border: 2px solid black;
+  margin: 1rem;
+  padding: 2rem 2rem;
+  border-radius: 4px;
+  text-align: center;
+
+}
+.child {
+  display: inline-block;
+  border: 1px solid black;
+  padding: 1rem 1rem;
+  vertical-align: middle;
+}
+
+
+@media screen and (max-width: 600px) {
+    form {
+        max-width: 400px;
+    }
+}
