@@ -22,6 +22,9 @@ alert("¿Estás segura de que quieres cancelar?");
 $(document).ready(function() {
   $('#createRoomModal').modal('show');
 });
+$(document).ready(function() {
+  $('#exitRoomModal').modal('show');
+});
 
 
 window.addEventListener('DOMContentLoaded', () => {

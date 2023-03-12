@@ -1,0 +1,52 @@
+{% extends "base2.html" %}
+{% block head %}
+<img src="{{url_for('static',filename='logo.jpg')}}" style="width:20%" class="center"><br>
+<form action="#" method="post">
+    {% if error %}
+    <div class="alert alert-danger alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ error }}
+    {% endif %}
+	<h1 style="font-family: Arial"> {{current_user.first_name}} Filled The required Information </h1>
+    <div id="google_translate_element" hidden></div>
+    <div class="selected-lang" style="width:20%">                 
+            <select onchange="changeLanguage(this.value)">
+                <option value="en"> English</option>
+                <option value="es">Spanish</option>
+            </select>                
+        </div>  
+<div class="select-container">
+    <label for="disabilities">Type of Disability<span style="color: red;">*</span></label>
+    <select id="disabilities" name="disabilities" required>
+        <option value="">--Select--</option>
+        <option value="Physical">Physicall Disability</option>
+        <option value="Mental">Mental Disability</option>
+        <option value="Intellectual"> Intellectual Disability</option>
+        <option value="Sensory"> sensory Disability</option>
+        <option value="plri"> Pluridisability</option>
+    </select>
+</div>
+   
+<div class="select-container">
+    <label for="disability">Specific Disability<span style="color: red;">*</span></label>
+    <select id="disability" name="disability" required>
+         <option value="">Select</option>
+    <option value="NINGUNA">NONE</option>
+    <option value="Funcional (Sistema neuromuscular y/o esquelético)">Functional (neuromuscular and/or skeletal system)</option>
+    <option value="Orgánica (procesos fisiológicos u órganos internos)">Organic (physiological processes or internal organs)</option>
+    <option value="Facultades mentales">Mental faculties</option>
+    <option value="Estructuras neurológicas">Neurological structures</option>
+    <option value="Función intelectual">Intellectual function</option>
+    <option value="Dificultad de comprensión y/o respuesta">Difficulty in understanding and/or responding</option>
+    <option value="Auditiva">hearing impairment</option>
+    <option value="Visual">Visual impairment</option>
+    <option value="Tacto">disability to touch</option>
+    <option value="Gusto">taste disability</option>
+    <option value="Olfato">olfactory impairment</option>
+    <option value="Desarrollo psicomotriz y/o sensorial">Psychomotor and/or sensory development</option>
+  </select>
+</div>
+<button type="submit" class="btn btn-primary my-button">Click me!</button>
+</form>
+
+{% endblock %}

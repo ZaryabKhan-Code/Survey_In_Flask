@@ -1,4 +1,30 @@
+.add_button{
+  display: inline-block;
+  padding: 5px 15px;
+  background-color: #6A0DAD;
+    color: white;
+  font-size: 15px;
+  text-decoration: none;
+  border-radius: 4px;
+}
 
+.add_button:hover {
+  background-color: #8B78E6;
+}
+.my-button {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.my-button:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+  color: #fff;
+}
 
 body{
     background-color: purple;

@@ -9,6 +9,11 @@ def LoadUserById(user_id):
 def get_user_id_card(id):
     return User.query.filter_by(id_card=id).first()
 
+def get_user_other_user_information(id):
+    return OtherInformation.query.filter_by(user_id=id).first()
+
+def get_user_disability(id):
+    return Disability.query.filter_by(user_id=id).first()
 
 def validate_id_card(id_card):
     regular_pattern = re.compile("^\d{1}-\d{4}-\d{5}$")

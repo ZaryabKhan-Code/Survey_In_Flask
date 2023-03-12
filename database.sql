@@ -26,8 +26,23 @@ VALUES (1, 'John', 'Doe', '1-1234-12345', 'john.doe@example.com', '123 Main St',
 
 INSERT INTO user (id, first_name, last_name, id_card, current_email_address, address, city, province, country, is_filled)
 VALUES (2, 'Jane', 'Doe', 'PE-1234-123456', 'jane.doe@example.com', '456 Oak St', 'Othertown', 'Otherprovince', 'Othercountry', FALSE);
-
-
+select * from user;
+set Foregin
+truncate user;
+CREATE TABLE other_information (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    gender VARCHAR(10),
+    edad INT,
+    date_of_birth Varchar(20),
+    blood_type VARCHAR(10),
+    blood_donor varchar(20),
+    language VARCHAR(200),
+    home_number VARCHAR(20),
+    province VARCHAR(200),
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
+select * from other_information;
 create table unregisteruser(
 id int primary key auto_increment,
 id_card varchar (200),
@@ -39,7 +54,77 @@ city varchar (200),
 province varchar(200),
 country varchar(200)
 );
+CREATE TABLE disability (
+    id INTEGER PRIMARY KEY,
+    user_id INTEGER,
+    type VARCHAR(50),
+    specific_disability VARCHAR(200),
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
+truncate user;
+truncate other_information;
+truncate disability;
+CREATE TABLE University (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    student_center VARCHAR(200),
+    bachelor_or_technician_1 VARCHAR(200),
+    bachelor_or_technician_2 VARCHAR(200),
+    mastery_1 VARCHAR(200),
+    mastery_2 VARCHAR(200),
+    doctrate VARCHAR(200),
+    institute_or_technical_training_center VARCHAR(200),
+    professional_education_and_training VARCHAR(200),
+    vocational_training_or_additional_training VARCHAR(200),
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
 
+select * from university;
+select * from DegreeProgram;
+CREATE TABLE DegreeProgram (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    degree VARCHAR(200),
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
+select * from DegreeProgram;
+CREATE TABLE vocationaltrainingcenters (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    vocationaltrainingcenters VARCHAR(200),
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
+truncate University;
+select * from vocationaltrainingcenters;
+CREATE TABLE TechnicalTraining (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    technicalTraining VARCHAR(200),
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
+select * from technicalTraining;
+CREATE TABLE Diploma (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    diploma_image LONGBLOB,
+    job_experience VARCHAR(200),
+    identity_proof LONGBLOB,
+    personal_photo LONGBLOB,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
+select * from Diploma;
+truncate Diploma;
+truncate technicalTraining;
+truncate university;
+truncate vocationaltrainingcenters;
+truncate DegreeProgram;
+select * from Diploma;
+select * from disability;
 select * from admin;
 
 truncate admin;

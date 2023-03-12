@@ -2,8 +2,12 @@
 {% block head %}
 <body>
   <img src="{{url_for('static',filename='logo.jpg')}}" style="width:25%" class="center"><br>
-	<form action="#" method="post">
-	
+	<form action="{{url_for('user_model.user_dashboard')}}" method="post">
+    {% if error %}
+    <div class="alert alert-danger alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{ error }}
+    {% endif %}
         <div id="google_translate_element" hidden></div>
 			<div class="selected-lang" style="width:20%">                 
 					<select onchange="changeLanguage(this.value)">
@@ -40,7 +44,7 @@
     <span id="id-card-error" style="color: grey;"></span>
 <br>
 	<label for="name">Edad <span style="color: red;">*</span></label>
-		<input type="text" id="name" name="name" placeholder="For example: 18" required>
+		<input type="text" id="name" name="edad" placeholder="For example: 18" required>
 		<br>
 		 <label for="birthday">Date Of Birth:</label> <br>
 		 
@@ -226,7 +230,7 @@
 		<input type="text" id="email" name="email" placeholder="Your @email.." readonly value="{{current_user.current_email_address}}" >
 		
     <label for="mobile">Cellular or home number  <span style="color: red;">*</span></label>
-    <input type="text" id="mobile" name="mobile" pattern="\d{4}-\d{4}" placeholder="0000-0000" required>
+    <input type="text" id="mobile" name="mobile" pattern="\d{4}-\d{4}" placeholder="0000-0000" value="{{ input_record.home_number }}"required>
     <span id="mobile-error" style="color: grey;"></span>
 		
 	<div class="select-container">
@@ -296,9 +300,7 @@
   <input type="text" id="address" name="address" placeholder="Address" readonly value="{{current_user.country}}" >
 </div>
 <br>
-<h3> Do you have any disabilities? </h3>
-<a href="disabilities.html" style="color:black; font-size:20px"> Yes </a> <br>
-<a href="none.html" style="color:black; font-size:20px"> No </a>
+<button type="submit" class="btn btn-success my-button"> Click Here </button> <br>
 </div>
 </form>
 </body>
