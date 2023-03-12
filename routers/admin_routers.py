@@ -1,6 +1,7 @@
 from flask import *
 from config.config import *
 from utils.admin_utils import *
+from models.user_models import *
 import bcrypt
 
 admin_router  = Blueprint('admin_model',__name__,static_folder='static', template_folder='views')
@@ -116,7 +117,8 @@ def activate():
 @login_required
 def admin_dashboard():
     try:
-        return render_template('dashboard.html')
+        user = User.query.all()
+        return render_template('dashboard.html',user=user)
     except Exception as e:
         message = f'Error'
         return render_template('dashboard.html',message=message)

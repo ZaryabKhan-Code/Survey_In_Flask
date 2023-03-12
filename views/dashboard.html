@@ -11,42 +11,29 @@
     <table id="dataTable">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
+                <th>First Name</th>
+                <th>Email Address</th>
+                <th>Id Card</th>
                 <th>Address</th>
+                <th>Survey Filled</th>
                 <th>Details</th>
             </tr>
         </thead>
         <tbody>
+            {% for user in user %}
             <tr>
-                <td>John Doe</td>
-                <td>john.doe@example.com</td>
-                <td>(123) 456-7890</td>
-                <td>123 Main St, Anytown USA</td>
-                <td><button onclick="showDetails('John Doe', 'john.doe@example.com', '(123) 456-7890', '123 Main St, Anytown USA')">Details</button></td>
+                <td>{{user.first_name}}</td>
+                <td>{{user.current_email_address}}</td>
+                <td>{{user.id_card}}</td>
+                <td>{{user.address}}</td>
+                {% if user.is_filled==0 %}
+                    <td>No</td>
+                {% else %}
+                    <td>Yes</td>
+                {% endif %}
+                <td><button><a href="/user/details/{{user.id}}" style="text-decoration: none;color: white;">Details</a></button></td>
             </tr>
-            <tr>
-                <td>Jane Smith</td>
-                <td>jane.smith@example.com</td>
-                <td>(555) 555-5555</td>
-                <td>456 Maple Ave, Anytown USA</td>
-                <td><button onclick="showDetails('John Doe', 'john.doe@example.com', '(123) 456-7890', '123 Main St, Anytown USA')">Details</button></td>
-            </tr>
-            <tr>
-                <td>John Doe</td>
-                <td>john.doe@example.com</td>
-                <td>(123) 456-7890</td>
-                <td>123 Main St, Anytown USA</td>
-                <td><button onclick="showDetails('John Doe', 'john.doe@example.com', '(123) 456-7890', '123 Main St, Anytown USA')">Details</button></td>
-            </tr>
-            <tr>
-                <td>Jane Smith</td>
-                <td>jane.smith@example.com</td>
-                <td>(555) 555-5555</td>
-                <td>456 Maple Ave, Anytown USA</td>
-                <td><button onclick="showDetails('John Doe', 'john.doe@example.com', '(123) 456-7890', '123 Main St, Anytown USA')">Details</button></td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>
