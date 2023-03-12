@@ -9,6 +9,9 @@ def LoadUserById(user_id):
 def get_user_id_card(id):
     return User.query.filter_by(id_card=id).first()
 
+def get_user_by_email(email):
+    return User.query.filter_by(current_email_address=email).first()
+
 def get_user_other_user_information(id):
     return OtherInformation.query.filter_by(user_id=id).first()
 

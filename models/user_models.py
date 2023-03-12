@@ -12,7 +12,19 @@ class User(UserMixin,db.Model):
     country = db.Column(db.String(200))
     is_filled = db.Column(db.Boolean,default=False)
     
-    
+class UnregisterUser(db.Model):
+    __tablename__ = 'unregisteruser'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    id_card = db.Column(db.String(200))
+    first_name = db.Column(db.String(200))
+    last_name = db.Column(db.String(200))
+    current_email_address = db.Column(db.String(200))
+    address = db.Column(db.String(200))
+    city = db.Column(db.String(200))
+    province = db.Column(db.String(200))
+    country = db.Column(db.String(200))
+
 
 class OtherInformation(db.Model):
     __tablename__ = 'other_information'
@@ -47,7 +59,9 @@ class University(db.Model):
     professional_education_and_training = db.Column(db.String(200),nullable=True)
     vocational_training_or_additional_training = db.Column(db.String(200),nullable=True)
 
+
 class DegreeProgram(db.Model):
+    __tablename__='DegreeProgram'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     degree = db.Column(db.String(200),nullable=True)
@@ -58,6 +72,7 @@ class TechnicalTraining(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     technicalTraining= db.Column(db.String(200),nullable=True)
 class Vocationaltrainingcenters(db.Model):
+    __tablename__='vocationaltrainingcenters'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     Vocationaltrainingcenters = db.Column(db.String(200),nullable=True)
@@ -70,3 +85,12 @@ class Diploma(db.Model):
     identity_proof = db.Column(db.LargeBinary)
     personal_photo = db.Column(db.LargeBinary)
     
+    
+class Institution(db.Model):
+    __tablename__='institution'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    trainingcenter = db.Column(db.String(200), nullable=True)
+    othervocationaltraining = db.Column(db.String(200),nullable=True)
+    training = db.Column(db.String(200),nullable=True)
+    addtraining = db.Column(db.String(200),nullable=True)

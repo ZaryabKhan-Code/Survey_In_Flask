@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Encuesta completada</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .logo {
+            display: block;
+            margin: 0 auto;
+            max-width: 200px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="alert alert-success mt-5" role="alert">
+            ¡Encuesta completada con éxito!
+        </div>
+        <img src="{{url_for('static',filename='logo.jpg')}}" class="img-fluid my-3 logo" alt="Encuesta completada">
+        <p>Gracias por participar en nuestra encuesta. Tus respuestas han sido registradas correctamente.</p>
+        <a href="{{url_for('user_model.id_card_login')}}" class="btn btn-primary">Regresar</a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

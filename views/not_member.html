@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>My Page</title>     
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script src="{{ url_for('static', filename='js/language.js') }}" defer></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </head>
+    <style>
+    .input-status {
+    font-size: 1em;
+    margin-top: 0.5em;
+  }
+
+  .input-status .valid {
+    color: green;
+  }
+
+  .input-status .invalid {
+    color: red;
+  }
+  </style>
+  <body>
+    <div class="container mt-3">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Note: </strong> This is a notification message. If popup is missing please refresh the page.
+        </div>
+    </div>
+    
+<!-- Modal -->
+<div class="modal fade" id="createRoomModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Not a member</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            {% if error_message %}
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {{ error_message }}
+            </div>
+            {% endif %}
+
+          <form action="{{url_for('user_model.user_intrested')}}" method="post">
+            <div id="google_translate_element" hidden></div>                 
+            <div class="selected-lang" style="width:20%">                 
+                    <select onchange="changeLanguage(this.value)">
+                        <option value="en"> English</option>
+                        <option value="es">Spanish</option>
+                    </select>                
+                </div> 
+                <br>
+            <div class="form-group">
+              <label for="id_card">ID Card:</label>
+              <div>
+                <p class="input-status" id="id_card_status"></p>
+              </div> 
+              <input type="text" class="form-control" id="id_card" name="id_card" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address:</label>
+              <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="address">Address:</label>
+              <input type="text" class="form-control" id="address" name="address" required>
+            </div>
+            <div class="form-group">
+              <label for="first_name">First Name:</label>
+              <input type="text" class="form-control" id="first_name" name="first_name" required>
+            </div>
+            <div class="form-group">
+              <label for="last_name">Last Name:</label>
+              <input type="text" class="form-control" id="last_name" name="last_name" required>
+            </div>
+            <div class="form-group">
+              <label for="city">City:</label>
+              <input type="text" class="form-control" id="city" name="city" required>
+            </div>
+            <div class="form-group">
+              <label for="province">Province:</label>
+              <input type="text" class="form-control" id="province" name="province" required>
+            </div>
+            <div class="form-group">
+              <label for="country">Country:</label>
+              <input type="text" class="form-control" id="country" name="country" required>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <a type="submit" class="btn btn-secondary" href="{{url_for('user_model.id_card_login')}}">Back</a>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
+
+<style>
+  .invalid { border-color: red; }
+  .valid { border-color: green; }
+  
+</style>
+<script>
+    function googleTranslateElementInit() {
+ new google.translate.TranslateElement({
+     pageLanguage: 'en',
+     includedLanguages: 'en,es',
+     layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+     autoDisplay: false,
+     gaTrack: true,
+     gaId: 'UA-12345-6'
+ }, 'google_translate_element');
+}
+
+function changeLanguage(lang) {
+ var select = document.querySelector("#google_translate_element select");
+ var event = new Event("change");
+ select.value = lang;
+ select.dispatchEvent(event);
+}
+</script>
+</html>

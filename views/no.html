@@ -2,616 +2,28 @@
 {% block head %}
 
 <body>
-
     <img src="{{url_for('static',filename='logo.jpg')}}" style="width:20%" class="center"><br>
-	<form action="{{url_for('user_model.user_university_yes')}}" enctype="multipart/form-data" method="post">
+	<form action="{{url_for('user_model.user_university_no')}}" enctype="multipart/form-data" method="post">
 	
 	  {% if error %}
     <div class="alert alert-danger alert-dismissible">
       <button type="button" class="close" data-dismiss="alert">&times;</button>
       {{ error }}
+    </div>
     {% endif %}
 	<h1 style="font-family: Arial"> {{current_user.first_name}} Filled The required Information </h1>
-    <div id="google_translate_element" hidden></div>
-    <div class="selected-lang" style="width:20%">                 
-            <select onchange="changeLanguage(this.value)">
-                <option value="en"> English</option>
-                <option value="es">Spanish</option>
-            </select>                
+    <div class="selected-lang" style="width:20%">  
+        <div id="google_translate_element" hidden></div>               
+        <select onchange="changeLanguage(this.value)">
+            <option value="en"> English</option>
+            <option value="es">Spanish</option>
+        </select>                
+    </div>       
         </div>  
 	
 	<div>
-<label for="uni">Select Study Center<span style="color: red;">*</span></label>
-		<select id="uni" name="uni" required>
-            <option value="">Select</option>
-            <option value="UMECIT">UMECIT</option>
-            <option value="ADEN University">ADEN University</option>
-            <option value="Columbus University">Columbus University</option>
-            <option value="Escuela de Arquitectura y Diseño de América Latina y el Caribe ISTHMUS">Escuela de Arquitectura y Diseño de América Latina y el Caribe ISTHMUS</option>
-            <option value="Florida State University">Florida State University</option>
-            <option value="INCAE Business School">INCAE Business School</option>
-            <option value="Instituto de Estudios Superiores de Administración IESA">Instituto de Estudios Superiores de Administración IESA</option>
-            <option value="Instituto Superior de Ingeniería">Instituto Superior de Ingeniería</option>
-            <option value="Instituto Superior Politécnico de América CECOOPE">Instituto Superior Politécnico de América CECOOPE</option>
-            <option value="ISAE Universidad">ISAE Universidad</option>
-            <option value="Quality Leadership University QLU">Quality Leadership University QLU</option>
-            <option value="Univeridad de Cartago">Univeridad de Cartago</option>
-            <option value="Universidad Abierta y a Distancia de Panamá">Universidad Abierta y a Distancia de Panamá</option>
-            <option value="Universidad Americana">Universidad Americana</option>
-            <option value="Universidad Autónoma de Chiriquí">Universidad Autónoma de Chiriquí</option>
-            <option value="Universidad Católica Santa María La Antigua">Universidad Católica Santa María La Antigua</option>
-            <option value="Universidad Cristiana de Panamá">Universidad Cristiana de Panamá</option>
-            <option value="Universidad de Panamá">Universidad de Panamá</option>
-            <option value="Universidad de Santander Panamá">Universidad de Santander Panamá</option>
-            <option value="Universidad del Arte GANEXA">Universidad del Arte GANEXA</option>
-            <option value="Universidad del Istmo Panamá">Universidad del Istmo Panamá</option>
-            <option value="Universidad Especializada de las Américas">Universidad Especializada de las Américas</option>
-            <option value="Universidad Especializada del Contador Pública Autorizado UNESCPA">Universidad Especializada del Contador Pública Autorizado UNESCPA</option>
-            <option value="Universidad Hispanoamericana de Panamá">Universidad Hispanoamericana de Panamá</option>
-            <option value="Universidad Interamericana de Panamá">Universidad Interamericana de Panamá</option>
-            <option value="Universidad Interamericana de Puerto Rico">Universidad Interamericana de Puerto Rico</option>
-            <option value="Universidad Internacional de Ciencia y Tecnología UNICYT">Universidad Internacional de Ciencia y Tecnología UNICYT</option>
-            <option value="Universidad Internacional Nueva Luz">Universidad Internacional Nueva Luz</option>
-            <option value="Universidad Latina">Universidad Latina</option>
-            <option value="Universidad Latinoamericana de Comercio Exterior ULACEX">Universidad Latinoamericana de Comercio Exterior ULACEX</option>
-            <option value="Universidad Marítima Internacional de Panamá">Universidad Marítima Internacional de Panamá</option>
-            <option value="Universidad Politécnica Internacional">Universidad Politécnica Internacional</option>
-            <option value="Universidad Tecnológica de Panamá">Universidad Tecnológica de Panamá</option>
-            <option value="Universidad Tecnológica Oteima">Universidad Tecnológica Oteima</option>
-          </select>
-		  <label for="message">Other or International Institutes</label>
-      <input type="text" id="name" name="field_name" required>
-      </div>
-  <br>
-  <label for="bt">Bachelor Or Technician 1<span style="color: red;">*</span></label>
-		<select id="bt" name="bt" required>
-		    <option value="">Select</option>
-            <option value="NO">NO</option>
-            <option value="Curso Especial de Administración Escolar a Nivel de Postgrado (CEPADE)">Curso Especial de Administración Escolar a Nivel de Postgrado (CEPADE)</option>
-            <option value="Doctor en Medicina">Doctor en Medicina</option>
-            <option value="Doctor en Medicina Veterinaria">Doctor en Medicina Veterinaria</option>
-            <option value="Ingeniería Agronómica en Cultivos  Tropicales">Ingeniería Agronómica en Cultivos Tropicales</option>
-            <option value="Ingeniería Agrónomo Zootecnista">Ingeniería Agrónomo Zootecnista</option>
-            <option value="Ingeniería en Agronegocios y Desarrollo Agropecuario">Ingeniería en Agronegocios y Desarrollo Agropecuario</option>
-            <option value="Ingeniería en Ciencia de la Producción Animal (*)">Ingeniería en Ciencia de la Producción Animal (*)</option>
-            <option value="Ingeniería en Edificaciones">Ingeniería en Edificaciones</option>
-            <option value="Ingeniería en Energías Renovables">Ingeniería en Energías Renovables</option>
-            <option value="Ingeniería en Estadística">Ingeniería en Estadística</option>
-            <option value="Ingeniería en Infraestructura">Ingeniería en Infraestructura</option>
-            <option value="Ingeniería en Manejo de Cuencas y Ambiente">Ingeniería en Manejo de Cuencas y Ambiente</option>
-            <option value="Ingeniería en Operaciones Aeroportuarias">Ingeniería en Operaciones Aeroportuarias</option>
-            <option value="Ingeniería en Prevención de Riesgos, Seguridad y Ambiente">Ingeniería en Prevención de Riesgos, Seguridad y Ambiente</option>
-            <option value="Ingeniería Industrial, Auditoría y Gestión de Procesos">Ingeniería Industrial, Auditoría y Gestión de Procesos</option>
-            <option value="Ingeniería Mecatrónica">Ingeniería Mecatrónica</option>
-            <option value="Licenciado en Psicología">Licenciado en Psicología</option>
-            <option value="Licenciatura con Especialización en Orientación Educativa y Profesional">Licenciatura con Especialización en Orientación Educativa y Profesional</option>
-            <option value="Licenciatura en Administración de Centros Educativos">Licenciatura en Administración de Centros Educativos</option>
-            <option value="Licenciatura en Administración de Empresas">Licenciatura en Administración de Empresas</option>
-            <option value="Licenciatura en Administración de Empresas Cooperativas (Solo en Programas Anexos)">Licenciatura en Administración de Empresas Cooperativas (Solo en Programas Anexos)</option>
-            <option value="Licenciatura en Administración de Empresas Marítimas">Licenciatura en Administración de Empresas Marítimas</option>
-            <option value="Licenciatura en Administración de Empresas Turísticas Bilingüe">Licenciatura en Administración de Empresas Turísticas Bilingüe</option>
-            <option value="Licenciatura en Administración de Mercadeo, Promoción y Ventas">Licenciatura en Administración de Mercadeo, Promoción y Ventas</option>
-            <option value="Licenciatura en Administración de Recursos Humanos">Licenciatura en Administración de Recursos Humanos</option>
-            <option value="Licenciatura en Administración Policial">Licenciatura en Administración Policial</option>
-            <option value="Licenciatura en Administración Pública">Licenciatura en Administración Pública</option>
-            <option value="Licenciatura en Administración Pública Aduanera">Licenciatura en Administración Pública Aduanera</option>
-            <option value="Licenciatura en Antropología y tabla de equivalencia (actualizada)">Licenciatura en Antropología y tabla de equivalencia (actualizada)</option>
-            <option value="Licenciatura en Arquitectura">Licenciatura en Arquitectura</option>
-            <option value="Licenciatura en Bellas Artes con Especialización en Arte Teatral">Licenciatura en Bellas Artes con Especialización en Arte Teatral</option>
-            <option value="Licenciatura en Bellas Artes con Especialización en Artes Visuales y Énfasis en Dibujo y Pintura">Licenciatura en Bellas Artes con Especialización en Artes Visuales y Énfasis en Dibujo y Pintura</option>
-            <option value="Licenciatura en Bellas Artes con Especialización en Artes Visuales y Énfasis en Diseño Artístico Visual">Licenciatura en Bellas Artes con Especialización en Artes Visuales y Énfasis en Diseño Artístico Visual</option>
-            <option value="Licenciatura en Bellas Artes con Especialización en Artes Visuales y Énfasis en Escultura">Licenciatura en Bellas Artes con Especialización en Artes Visuales y Énfasis en Escultura</option>
-            <option value="Licenciatura en Bellas Artes con Especialización en Artes Visuales y Énfasis en Técnicas de Impresión">Licenciatura en Bellas Artes con Especialización en Artes Visuales y Énfasis en Técnicas de Impresión</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Canto">Licenciatura en Bellas Artes con especialización en Canto</option>
-            <option value="Licenciatura en Bellas Artes con Especialización en Danza">Licenciatura en Bellas Artes con Especialización en Danza</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Guitarra">Licenciatura en Bellas Artes con especialización en Guitarra</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Clarinete">Licenciatura en Bellas Artes con especialización en Instrumento Musical Clarinete</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Contrabajo">Licenciatura en Bellas Artes con especialización en Instrumento Musical Contrabajo</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Corno Francés">Licenciatura en Bellas Artes con especialización en Instrumento Musical Corno Francés</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Fagot">Licenciatura en Bellas Artes con especialización en Instrumento Musical Fagot</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Flauta">Licenciatura en Bellas Artes con especialización en Instrumento Musical Flauta</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Oboe">Licenciatura en Bellas Artes con especialización en Instrumento Musical Oboe</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Percusión">Licenciatura en Bellas Artes con especialización en Instrumento Musical Percusión</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Saxofón">Licenciatura en Bellas Artes con especialización en Instrumento Musical Saxofón</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Trombón">Licenciatura en Bellas Artes con especialización en Instrumento Musical Trombón</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Trompeta">Licenciatura en Bellas Artes con especialización en Instrumento Musical Trompeta</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Tuba">Licenciatura en Bellas Artes con especialización en Instrumento Musical Tuba</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Viola">Licenciatura en Bellas Artes con especialización en Instrumento Musical Viola</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Violín">Licenciatura en Bellas Artes con especialización en Instrumento Musical Violín</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Violoncello">Licenciatura en Bellas Artes con especialización en Instrumento Musical Violoncello</option>
-            <option value="Licenciatura en Bellas Artes con Especialización en Música">Licenciatura en Bellas Artes con Especialización en Música</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Piano">Licenciatura en Bellas Artes con especialización en Piano</option>
-            <option value="Licenciatura en Bellas Artes con Especialización en&nbsp;Música">Licenciatura en Bellas Artes con Especialización en Música</option>
-            <option value="Licenciatura en Biología Ambiental">Licenciatura en Biología Ambiental</option>
-            <option value="Licenciatura en Biología con énfasis en Microbiología y Parasitología">Licenciatura en Biología con énfasis en Microbiología y Parasitología</option>
-            <option value="Licenciatura en Biología con Orientación en Biología Ambiental">Licenciatura en Biología con Orientación en Biología Ambiental</option>
-            <option value="Licenciatura en Biología con Orientación en Biología Animal">Licenciatura en Biología con Orientación en Biología Animal</option>
-            <option value="Licenciatura en Biología con Orientación en Biología Vegetal">Licenciatura en Biología con Orientación en Biología Vegetal</option>
-            <option value="Licenciatura en Biología con Orientación en Microbiología">Licenciatura en Biología con Orientación en Microbiología</option>
-            <option value="Licenciatura en Biología con Orientación en Parasitología">Licenciatura en Biología con Orientación en Parasitología</option>
-            <option value="Licenciatura en Cartografía">Licenciatura en Cartografía</option>
-            <option value="Licenciatura en Ciencias de Enfermería">Licenciatura en Ciencias de Enfermería</option>
-            <option value="Licenciatura en Ciencias de la Educación con énfasis en Educación Pre – Escolar">Licenciatura en Ciencias de la Educación con énfasis en Educación Pre – Escolar</option>
-            <option value="Licenciatura en Ciencias de la Educación con énfasis en Educación Primaria">Licenciatura en Ciencias de la Educación con énfasis en Educación Primaria</option>
-            <option value="Licenciatura en Ciencias Políticas">Licenciatura en Ciencias Políticas</option>
-            <option value="Licenciatura en Cirugía Dental">Licenciatura en Cirugía Dental</option>
-            <option value="Licenciatura en Contabilidad">Licenciatura en Contabilidad</option>
-            <option value="Licenciatura en Contabilidad y Auditoría">Licenciatura en Contabilidad y Auditoría</option>
-            <option value="Licenciatura en Derecho y Ciencias Políticas">Licenciatura en Derecho y Ciencias Políticas</option>
-            <option value="Licenciatura en Desarrollo Comunitario">Licenciatura en Desarrollo Comunitario</option>
-            <option value="Licenciatura en Desarrollo comunitario con énfasis en Promoción Social (Ocú)">Licenciatura en Desarrollo comunitario con énfasis en Promoción Social (Ocú)</option>
-            <option value="Licenciatura en Diseño de Interiores">Licenciatura en Diseño de Interiores</option>
-            <option value="Licenciatura en Diseño de Modas">Licenciatura en Diseño de Modas</option>
-            <option value="Licenciatura en Diseño Gráfico">Licenciatura en Diseño Gráfico</option>
-            <option value="Licenciatura en Diseño Industrial de Productos">Licenciatura en Diseño Industrial de Productos</option>
-            <option value="Licenciatura en Docencia en Biología">Licenciatura en Docencia en Biología</option>
-            <option value="Licenciatura en Docencia en Física">Licenciatura en Docencia en Física</option>
-            <option value="Licenciatura en Docencia en Matemáticas">Licenciatura en Docencia en Matemáticas</option>
-            <option value="Licenciatura en Docencia en Química">Licenciatura en Docencia en Química</option>
-            <option value="Licenciatura en Economía">Licenciatura en Economía</option>
-            <option value="Licenciatura en Economía para la Gestión Ambiental">Licenciatura en Economía para la Gestión Ambiental</option>
-            <option value="Licenciatura en Edificación">Licenciatura en Edificación</option>
-            <option value="Licenciatura en Educación Física">Licenciatura en Educación Física</option>
-            <option value="Licenciatura en Educación Preescolar">Licenciatura en Educación Preescolar</option>
-            <option value="Licenciatura en Educación Primaria">Licenciatura en Educación Primaria</option>
-            <option value="Licenciatura en Enfermería">Licenciatura en Enfermería</option>
-            <option value="Licenciatura en Español">Licenciatura en Español</option>
-            <option value="Licenciatura en Estadística de Salud y Registros Médicos">Licenciatura en Estadística de Salud y Registros Médicos</option>
-            <option value="Licenciatura en Estadística Económica y Social">Licenciatura en Estadística Económica y Social</option>
-            <option value="Licenciatura en Evaluación e Investigación">Licenciatura en Evaluación e Investigación</option>
-            <option value="Licenciatura en Eventos y Protocolo Corporativo">Licenciatura en Eventos y Protocolo Corporativo</option>
-            <option value="Licenciatura en Farmacia">Licenciatura en Farmacia</option>
-            <option value="Licenciatura en Filosofía e Historia (actualizada)">Licenciatura en Filosofía e Historia (actualizada)</option>
-            <option value="Licenciatura en Filosofía, Ética y Valores (actualizada)">Licenciatura en Filosofía, Ética y Valores (actualizada)</option>
-            <option value="Licenciatura en Finanzas y Banca">Licenciatura en Finanzas y Banca</option>
-            <option value="Licenciatura en Finanzas y Negocios Internacionales">Licenciatura en Finanzas y Negocios Internacionales</option>
-            <option value="Licenciatura en Física">Licenciatura en Física</option>
-            <option value="Licenciatura en Francés (actualizada)">Licenciatura en Francés (actualizada)</option>
-            <option value="Licenciatura en Gastronomía">Licenciatura en Gastronomía</option>
-            <option value="Licenciatura en Geografía e Historia">Licenciatura en Geografía e Historia</option>
-            <option value="Licenciatura en Gerencia de Comercio Electrónico">Licenciatura en Gerencia de Comercio Electrónico</option>
-            <option value="Licenciatura en Gestión Archivística&nbsp;(actualizada)">Licenciatura en Gestión Archivística (actualizada)</option>
-            <option value="Licenciatura en Guía de Turismo Geográfico Ecológico">Licenciatura en Guía de Turismo Geográfico Ecológico</option>
-            <option value="Licenciatura en Historia (actualizada)">Licenciatura en Historia (actualizada)</option>
-            <option value="Licenciatura en Humanidades con énfasis en Ingles">Licenciatura en Humanidades con énfasis en Ingles</option>
-            <option value="Licenciatura en Humanidades con Especialización en Turismo Alternativo (nueva carrera)">Licenciatura en Humanidades con Especialización en Turismo Alternativo (nueva carrera)</option>
-            <option value="Licenciatura en Informática Aplicada a la Enseñanza y Aplicación de Tecnologías">Licenciatura en Informática Aplicada a la Enseñanza y Aplicación de Tecnologías</option>
-            <option value="Licenciatura en Informática para la Gestión Educativa y Empresarial">Licenciatura en Informática para la Gestión Educativa y Empresarial</option>
-            <option value="Licenciatura en Ingeniería de Operaciones y Logística Empresarial">Licenciatura en Ingeniería de Operaciones y Logística Empresarial</option>
-            <option value="Licenciatura en Ingeniería en Electrónica y Comunicación">Licenciatura en Ingeniería en Electrónica y Comunicación</option>
-            <option value="Licenciatura en Ingeniería en Informática">Licenciatura en Ingeniería en Informática</option>
-            <option value="Licenciatura en Ingeniería en Topografía y Geodesia">Licenciatura en Ingeniería en Topografía y Geodesia</option>
-            <option value="Licenciatura en Ingeniería Geológica">Licenciatura en Ingeniería Geológica</option>
-            <option value="Licenciatura en Ingeniería Hidrológica y Recuersos Hídricos">Licenciatura en Ingeniería Hidrológica y Recuersos Hídricos</option>
-            <option value="Licenciatura en Ingles">Licenciatura en Ingles</option>
-            <option value="Licenciatura en Inversión y Riesgo">Licenciatura en Inversión y Riesgo</option>
-            <option value="Licenciatura en Investigación y Postgrados">Licenciatura en Investigación y Postgrados</option>
-            <option value="Licenciatura en Matemáticas">Licenciatura en Matemáticas</option>
-            <option value="Licenciatura en Mercadeo Promoción y Ventas">Licenciatura en Mercadeo Promoción y Ventas</option>
-            <option value="Licenciatura en Meteorología">Licenciatura en Meteorología</option>
-            <option value="Licenciatura en Nutrición y Dietética">Licenciatura en Nutrición y Dietética</option>
-            <option value="Licenciatura en Periodismo">Licenciatura en Periodismo</option>
-            <option value="Licenciatura en Psicología">Licenciatura en Psicología</option>
-            <option value="Licenciatura en Psicopedagogía">Licenciatura en Psicopedagogía</option>
-            <option value="Licenciatura en Química">Licenciatura en Química</option>
-            <option value="Licenciatura en Recursos Humanos">Licenciatura en Recursos Humanos</option>
-            <option value="Licenciatura en Registros Médicos y Estadísticas de Salud">Licenciatura en Registros Médicos y Estadísticas de Salud</option>
-            <option value="Licenciatura en Relaciones Internacionales">Licenciatura en Relaciones Internacionales</option>
-            <option value="Licenciatura en Representación Arquitectónica">Licenciatura en Representación Arquitectónica</option>
-            <option value="Licenciatura en Salud Ocupacional">Licenciatura en Salud Ocupacional</option>
-            <option value="Licenciatura en Sociología (actualizada)">Licenciatura en Sociología (actualizada)</option>
-            <option value="Licenciatura en Tecnología Médica">Licenciatura en Tecnología Médica</option>
-            <option value="Licenciatura en Trabajo Social">Licenciatura en Trabajo Social</option>
-            <option value="Licenciatura en Turismo Geográfico Ecológico">Licenciatura en Turismo Geográfico Ecológico</option>
-            <option value="Licenciatura en Turismo Histórico Cultural">Licenciatura en Turismo Histórico Cultural</option>
-            <option value="Licenciatura y Técnico en Bibliotecología y Ciencias de la Información (actualizada)">Licenciatura y Técnico en Bibliotecología y Ciencias de la Información (actualizada)</option>
-            <option value="Profesorado en Diversas Áreas (Diversificada)">Profesorado en Diversas Áreas (Diversificada)</option>
-            <option value="Profesorado en Docencia Media Diversificada a Nivel de Pre-Media y Media">Profesorado en Docencia Media Diversificada a Nivel de Pre-Media y Media</option>
-            <option value="Profesorado en Educación">Profesorado en Educación</option>
-            <option value="Técnico en Asistencia Odontológica">Técnico en Asistencia Odontológica</option>
-            <option value="Técnico en Cartografía">Técnico en Cartografía</option>
-            <option value="Técnico en Comunicación en Inglés con Énfasis en Centros de Llamadas">Técnico en Comunicación en Inglés con Énfasis en Centros de Llamadas</option>
-            <option value="Técnico en Corrección y Estilo de la Comunicación Oral y Escrita en Español">Técnico en Corrección y Estilo de la Comunicación Oral y Escrita en Español</option>
-            <option value="TÉCNICO EN DERECHO REGISTRAL&nbsp;">TÉCNICO EN DERECHO REGISTRAL&nbsp;</option>
-            <option value="Técnico en Economía Ambiental">Técnico en Economía Ambiental</option>
-            <option value="Técnico en Economía para la Gestión Ambiental">Técnico en Economía para la Gestión Ambiental</option>
-            <option value="Técnico en Farmacia">Técnico en Farmacia</option>
-            <option value="Técnico en Guía de Turismo Geográfico Ecológico">Técnico en Guía de Turismo Geográfico Ecológico</option>
-            <option value="Técnico en Informática Educativa">Técnico en Informática Educativa</option>
-            <option value="Técnico en Inglés como Segunda Lengua">Técnico en Inglés como Segunda Lengua</option>
-            <option value="Técnico en Métodos y Análisis Estadísticos">Técnico en Métodos y Análisis Estadísticos</option>
-            <option value="Técnico en Producción Radial">Técnico en Producción Radial</option>
-            <option value="Técnico en Registros Médicos y Estadísticas de Salud">Técnico en Registros Médicos y Estadísticas de Salud</option>
-            <option value="Técnico en Urgencias Médicas">Técnico en Urgencias Médicas</option>
-            <option value="Técnico Operario en Sistema Penal Acusatorio ">Técnico Operario en Sistema Penal Acusatorio </option>
-            <option value="Técnico Superior en Criminalística">Técnico Superior en Criminalística</option>
-          </select>
-		  
-		<label for="bt2">Bachelor or Technician 2</label>
-		<select id="bt2" name="bt2" >
-	  <option value="">Select</option>
-            <option value="NO">NO</option>
-            <option value="Curso Especial de Administración Escolar a Nivel de Postgrado (CEPADE)">Curso Especial de Administración Escolar a Nivel de Postgrado (CEPADE)</option>
-            <option value="Doctor en Medicina">Doctor en Medicina</option>
-            <option value="Doctor en Medicina Veterinaria">Doctor en Medicina Veterinaria</option>
-            <option value="Ingeniería Agronómica en Cultivos  Tropicales">Ingeniería Agronómica en Cultivos Tropicales</option>
-            <option value="Ingeniería Agrónomo Zootecnista">Ingeniería Agrónomo Zootecnista</option>
-            <option value="Ingeniería en Agronegocios y Desarrollo Agropecuario">Ingeniería en Agronegocios y Desarrollo Agropecuario</option>
-            <option value="Ingeniería en Ciencia de la Producción Animal (*)">Ingeniería en Ciencia de la Producción Animal (*)</option>
-            <option value="Ingeniería en Edificaciones">Ingeniería en Edificaciones</option>
-            <option value="Ingeniería en Energías Renovables">Ingeniería en Energías Renovables</option>
-            <option value="Ingeniería en Estadística">Ingeniería en Estadística</option>
-            <option value="Ingeniería en Infraestructura">Ingeniería en Infraestructura</option>
-            <option value="Ingeniería en Manejo de Cuencas y Ambiente">Ingeniería en Manejo de Cuencas y Ambiente</option>
-            <option value="Ingeniería en Operaciones Aeroportuarias">Ingeniería en Operaciones Aeroportuarias</option>
-            <option value="Ingeniería en Prevención de Riesgos, Seguridad y Ambiente">Ingeniería en Prevención de Riesgos, Seguridad y Ambiente</option>
-            <option value="Ingeniería Industrial, Auditoría y Gestión de Procesos">Ingeniería Industrial, Auditoría y Gestión de Procesos</option>
-            <option value="Ingeniería Mecatrónica">Ingeniería Mecatrónica</option>
-            <option value="Licenciado en Psicología">Licenciado en Psicología</option>
-            <option value="Licenciatura con Especialización en Orientación Educativa y Profesional">Licenciatura con Especialización en Orientación Educativa y Profesional</option>
-            <option value="Licenciatura en Administración de Centros Educativos">Licenciatura en Administración de Centros Educativos</option>
-            <option value="Licenciatura en Administración de Empresas">Licenciatura en Administración de Empresas</option>
-            <option value="Licenciatura en Administración de Empresas Cooperativas (Solo en Programas Anexos)">Licenciatura en Administración de Empresas Cooperativas (Solo en Programas Anexos)</option>
-            <option value="Licenciatura en Administración de Empresas Marítimas">Licenciatura en Administración de Empresas Marítimas</option>
-            <option value="Licenciatura en Administración de Empresas Turísticas Bilingüe">Licenciatura en Administración de Empresas Turísticas Bilingüe</option>
-            <option value="Licenciatura en Administración de Mercadeo, Promoción y Ventas">Licenciatura en Administración de Mercadeo, Promoción y Ventas</option>
-            <option value="Licenciatura en Administración de Recursos Humanos">Licenciatura en Administración de Recursos Humanos</option>
-            <option value="Licenciatura en Administración Policial">Licenciatura en Administración Policial</option>
-            <option value="Licenciatura en Administración Pública">Licenciatura en Administración Pública</option>
-            <option value="Licenciatura en Administración Pública Aduanera">Licenciatura en Administración Pública Aduanera</option>
-            <option value="Licenciatura en Antropología y tabla de equivalencia (actualizada)">Licenciatura en Antropología y tabla de equivalencia (actualizada)</option>
-            <option value="Licenciatura en Arquitectura">Licenciatura en Arquitectura</option>
-            <option value="Licenciatura en Bellas Artes con Especialización en Arte Teatral">Licenciatura en Bellas Artes con Especialización en Arte Teatral</option>
-            <option value="Licenciatura en Bellas Artes con Especialización en Artes Visuales y Énfasis en Dibujo y Pintura">Licenciatura en Bellas Artes con Especialización en Artes Visuales y Énfasis en Dibujo y Pintura</option>
-            <option value="Licenciatura en Bellas Artes con Especialización en Artes Visuales y Énfasis en Diseño Artístico Visual">Licenciatura en Bellas Artes con Especialización en Artes Visuales y Énfasis en Diseño Artístico Visual</option>
-            <option value="Licenciatura en Bellas Artes con Especialización en Artes Visuales y Énfasis en Escultura">Licenciatura en Bellas Artes con Especialización en Artes Visuales y Énfasis en Escultura</option>
-            <option value="Licenciatura en Bellas Artes con Especialización en Artes Visuales y Énfasis en Técnicas de Impresión">Licenciatura en Bellas Artes con Especialización en Artes Visuales y Énfasis en Técnicas de Impresión</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Canto">Licenciatura en Bellas Artes con especialización en Canto</option>
-            <option value="Licenciatura en Bellas Artes con Especialización en Danza">Licenciatura en Bellas Artes con Especialización en Danza</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Guitarra">Licenciatura en Bellas Artes con especialización en Guitarra</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Clarinete">Licenciatura en Bellas Artes con especialización en Instrumento Musical Clarinete</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Contrabajo">Licenciatura en Bellas Artes con especialización en Instrumento Musical Contrabajo</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Corno Francés">Licenciatura en Bellas Artes con especialización en Instrumento Musical Corno Francés</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Fagot">Licenciatura en Bellas Artes con especialización en Instrumento Musical Fagot</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Flauta">Licenciatura en Bellas Artes con especialización en Instrumento Musical Flauta</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Oboe">Licenciatura en Bellas Artes con especialización en Instrumento Musical Oboe</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Percusión">Licenciatura en Bellas Artes con especialización en Instrumento Musical Percusión</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Saxofón">Licenciatura en Bellas Artes con especialización en Instrumento Musical Saxofón</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Trombón">Licenciatura en Bellas Artes con especialización en Instrumento Musical Trombón</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Trompeta">Licenciatura en Bellas Artes con especialización en Instrumento Musical Trompeta</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Tuba">Licenciatura en Bellas Artes con especialización en Instrumento Musical Tuba</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Viola">Licenciatura en Bellas Artes con especialización en Instrumento Musical Viola</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Violín">Licenciatura en Bellas Artes con especialización en Instrumento Musical Violín</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Instrumento&nbsp;Musical Violoncello">Licenciatura en Bellas Artes con especialización en Instrumento Musical Violoncello</option>
-            <option value="Licenciatura en Bellas Artes con Especialización en Música">Licenciatura en Bellas Artes con Especialización en Música</option>
-            <option value="Licenciatura en Bellas Artes con especialización en Piano">Licenciatura en Bellas Artes con especialización en Piano</option>
-            <option value="Licenciatura en Bellas Artes con Especialización en&nbsp;Música">Licenciatura en Bellas Artes con Especialización en Música</option>
-            <option value="Licenciatura en Biología Ambiental">Licenciatura en Biología Ambiental</option>
-            <option value="Licenciatura en Biología con énfasis en Microbiología y Parasitología">Licenciatura en Biología con énfasis en Microbiología y Parasitología</option>
-            <option value="Licenciatura en Biología con Orientación en Biología Ambiental">Licenciatura en Biología con Orientación en Biología Ambiental</option>
-            <option value="Licenciatura en Biología con Orientación en Biología Animal">Licenciatura en Biología con Orientación en Biología Animal</option>
-            <option value="Licenciatura en Biología con Orientación en Biología Vegetal">Licenciatura en Biología con Orientación en Biología Vegetal</option>
-            <option value="Licenciatura en Biología con Orientación en Microbiología">Licenciatura en Biología con Orientación en Microbiología</option>
-            <option value="Licenciatura en Biología con Orientación en Parasitología">Licenciatura en Biología con Orientación en Parasitología</option>
-            <option value="Licenciatura en Cartografía">Licenciatura en Cartografía</option>
-            <option value="Licenciatura en Ciencias de Enfermería">Licenciatura en Ciencias de Enfermería</option>
-            <option value="Licenciatura en Ciencias de la Educación con énfasis en Educación Pre – Escolar">Licenciatura en Ciencias de la Educación con énfasis en Educación Pre – Escolar</option>
-            <option value="Licenciatura en Ciencias de la Educación con énfasis en Educación Primaria">Licenciatura en Ciencias de la Educación con énfasis en Educación Primaria</option>
-            <option value="Licenciatura en Ciencias Políticas">Licenciatura en Ciencias Políticas</option>
-            <option value="Licenciatura en Cirugía Dental">Licenciatura en Cirugía Dental</option>
-            <option value="Licenciatura en Contabilidad">Licenciatura en Contabilidad</option>
-            <option value="Licenciatura en Contabilidad y Auditoría">Licenciatura en Contabilidad y Auditoría</option>
-            <option value="Licenciatura en Derecho y Ciencias Políticas">Licenciatura en Derecho y Ciencias Políticas</option>
-            <option value="Licenciatura en Desarrollo Comunitario">Licenciatura en Desarrollo Comunitario</option>
-            <option value="Licenciatura en Desarrollo comunitario con énfasis en Promoción Social (Ocú)">Licenciatura en Desarrollo comunitario con énfasis en Promoción Social (Ocú)</option>
-            <option value="Licenciatura en Diseño de Interiores">Licenciatura en Diseño de Interiores</option>
-            <option value="Licenciatura en Diseño de Modas">Licenciatura en Diseño de Modas</option>
-            <option value="Licenciatura en Diseño Gráfico">Licenciatura en Diseño Gráfico</option>
-            <option value="Licenciatura en Diseño Industrial de Productos">Licenciatura en Diseño Industrial de Productos</option>
-            <option value="Licenciatura en Docencia en Biología">Licenciatura en Docencia en Biología</option>
-            <option value="Licenciatura en Docencia en Física">Licenciatura en Docencia en Física</option>
-            <option value="Licenciatura en Docencia en Matemáticas">Licenciatura en Docencia en Matemáticas</option>
-            <option value="Licenciatura en Docencia en Química">Licenciatura en Docencia en Química</option>
-            <option value="Licenciatura en Economía">Licenciatura en Economía</option>
-            <option value="Licenciatura en Economía para la Gestión Ambiental">Licenciatura en Economía para la Gestión Ambiental</option>
-            <option value="Licenciatura en Edificación">Licenciatura en Edificación</option>
-            <option value="Licenciatura en Educación Física">Licenciatura en Educación Física</option>
-            <option value="Licenciatura en Educación Preescolar">Licenciatura en Educación Preescolar</option>
-            <option value="Licenciatura en Educación Primaria">Licenciatura en Educación Primaria</option>
-            <option value="Licenciatura en Enfermería">Licenciatura en Enfermería</option>
-            <option value="Licenciatura en Español">Licenciatura en Español</option>
-            <option value="Licenciatura en Estadística de Salud y Registros Médicos">Licenciatura en Estadística de Salud y Registros Médicos</option>
-            <option value="Licenciatura en Estadística Económica y Social">Licenciatura en Estadística Económica y Social</option>
-            <option value="Licenciatura en Evaluación e Investigación">Licenciatura en Evaluación e Investigación</option>
-            <option value="Licenciatura en Eventos y Protocolo Corporativo">Licenciatura en Eventos y Protocolo Corporativo</option>
-            <option value="Licenciatura en Farmacia">Licenciatura en Farmacia</option>
-            <option value="Licenciatura en Filosofía e Historia (actualizada)">Licenciatura en Filosofía e Historia (actualizada)</option>
-            <option value="Licenciatura en Filosofía, Ética y Valores (actualizada)">Licenciatura en Filosofía, Ética y Valores (actualizada)</option>
-            <option value="Licenciatura en Finanzas y Banca">Licenciatura en Finanzas y Banca</option>
-            <option value="Licenciatura en Finanzas y Negocios Internacionales">Licenciatura en Finanzas y Negocios Internacionales</option>
-            <option value="Licenciatura en Física">Licenciatura en Física</option>
-            <option value="Licenciatura en Francés (actualizada)">Licenciatura en Francés (actualizada)</option>
-            <option value="Licenciatura en Gastronomía">Licenciatura en Gastronomía</option>
-            <option value="Licenciatura en Geografía e Historia">Licenciatura en Geografía e Historia</option>
-            <option value="Licenciatura en Gerencia de Comercio Electrónico">Licenciatura en Gerencia de Comercio Electrónico</option>
-            <option value="Licenciatura en Gestión Archivística&nbsp;(actualizada)">Licenciatura en Gestión Archivística (actualizada)</option>
-            <option value="Licenciatura en Guía de Turismo Geográfico Ecológico">Licenciatura en Guía de Turismo Geográfico Ecológico</option>
-            <option value="Licenciatura en Historia (actualizada)">Licenciatura en Historia (actualizada)</option>
-            <option value="Licenciatura en Humanidades con énfasis en Ingles">Licenciatura en Humanidades con énfasis en Ingles</option>
-            <option value="Licenciatura en Humanidades con Especialización en Turismo Alternativo (nueva carrera)">Licenciatura en Humanidades con Especialización en Turismo Alternativo (nueva carrera)</option>
-            <option value="Licenciatura en Informática Aplicada a la Enseñanza y Aplicación de Tecnologías">Licenciatura en Informática Aplicada a la Enseñanza y Aplicación de Tecnologías</option>
-            <option value="Licenciatura en Informática para la Gestión Educativa y Empresarial">Licenciatura en Informática para la Gestión Educativa y Empresarial</option>
-            <option value="Licenciatura en Ingeniería de Operaciones y Logística Empresarial">Licenciatura en Ingeniería de Operaciones y Logística Empresarial</option>
-            <option value="Licenciatura en Ingeniería en Electrónica y Comunicación">Licenciatura en Ingeniería en Electrónica y Comunicación</option>
-            <option value="Licenciatura en Ingeniería en Informática">Licenciatura en Ingeniería en Informática</option>
-            <option value="Licenciatura en Ingeniería en Topografía y Geodesia">Licenciatura en Ingeniería en Topografía y Geodesia</option>
-            <option value="Licenciatura en Ingeniería Geológica">Licenciatura en Ingeniería Geológica</option>
-            <option value="Licenciatura en Ingeniería Hidrológica y Recuersos Hídricos">Licenciatura en Ingeniería Hidrológica y Recuersos Hídricos</option>
-            <option value="Licenciatura en Ingles">Licenciatura en Ingles</option>
-            <option value="Licenciatura en Inversión y Riesgo">Licenciatura en Inversión y Riesgo</option>
-            <option value="Licenciatura en Investigación y Postgrados">Licenciatura en Investigación y Postgrados</option>
-            <option value="Licenciatura en Matemáticas">Licenciatura en Matemáticas</option>
-            <option value="Licenciatura en Mercadeo Promoción y Ventas">Licenciatura en Mercadeo Promoción y Ventas</option>
-            <option value="Licenciatura en Meteorología">Licenciatura en Meteorología</option>
-            <option value="Licenciatura en Nutrición y Dietética">Licenciatura en Nutrición y Dietética</option>
-            <option value="Licenciatura en Periodismo">Licenciatura en Periodismo</option>
-            <option value="Licenciatura en Psicología">Licenciatura en Psicología</option>
-            <option value="Licenciatura en Psicopedagogía">Licenciatura en Psicopedagogía</option>
-            <option value="Licenciatura en Química">Licenciatura en Química</option>
-            <option value="Licenciatura en Recursos Humanos">Licenciatura en Recursos Humanos</option>
-            <option value="Licenciatura en Registros Médicos y Estadísticas de Salud">Licenciatura en Registros Médicos y Estadísticas de Salud</option>
-            <option value="Licenciatura en Relaciones Internacionales">Licenciatura en Relaciones Internacionales</option>
-            <option value="Licenciatura en Representación Arquitectónica">Licenciatura en Representación Arquitectónica</option>
-            <option value="Licenciatura en Salud Ocupacional">Licenciatura en Salud Ocupacional</option>
-            <option value="Licenciatura en Sociología (actualizada)">Licenciatura en Sociología (actualizada)</option>
-            <option value="Licenciatura en Tecnología Médica">Licenciatura en Tecnología Médica</option>
-            <option value="Licenciatura en Trabajo Social">Licenciatura en Trabajo Social</option>
-            <option value="Licenciatura en Turismo Geográfico Ecológico">Licenciatura en Turismo Geográfico Ecológico</option>
-            <option value="Licenciatura en Turismo Histórico Cultural">Licenciatura en Turismo Histórico Cultural</option>
-            <option value="Licenciatura y Técnico en Bibliotecología y Ciencias de la Información (actualizada)">Licenciatura y Técnico en Bibliotecología y Ciencias de la Información (actualizada)</option>
-            <option value="Profesorado en Diversas Áreas (Diversificada)">Profesorado en Diversas Áreas (Diversificada)</option>
-            <option value="Profesorado en Docencia Media Diversificada a Nivel de Pre-Media y Media">Profesorado en Docencia Media Diversificada a Nivel de Pre-Media y Media</option>
-            <option value="Profesorado en Educación">Profesorado en Educación</option>
-            <option value="Técnico en Asistencia Odontológica">Técnico en Asistencia Odontológica</option>
-            <option value="Técnico en Cartografía">Técnico en Cartografía</option>
-            <option value="Técnico en Comunicación en Inglés con Énfasis en Centros de Llamadas">Técnico en Comunicación en Inglés con Énfasis en Centros de Llamadas</option>
-            <option value="Técnico en Corrección y Estilo de la Comunicación Oral y Escrita en Español">Técnico en Corrección y Estilo de la Comunicación Oral y Escrita en Español</option>
-            <option value="TÉCNICO EN DERECHO REGISTRAL&nbsp;">TÉCNICO EN DERECHO REGISTRAL&nbsp;</option>
-            <option value="Técnico en Economía Ambiental">Técnico en Economía Ambiental</option>
-            <option value="Técnico en Economía para la Gestión Ambiental">Técnico en Economía para la Gestión Ambiental</option>
-            <option value="Técnico en Farmacia">Técnico en Farmacia</option>
-            <option value="Técnico en Guía de Turismo Geográfico Ecológico">Técnico en Guía de Turismo Geográfico Ecológico</option>
-            <option value="Técnico en Informática Educativa">Técnico en Informática Educativa</option>
-            <option value="Técnico en Inglés como Segunda Lengua">Técnico en Inglés como Segunda Lengua</option>
-            <option value="Técnico en Métodos y Análisis Estadísticos">Técnico en Métodos y Análisis Estadísticos</option>
-            <option value="Técnico en Producción Radial">Técnico en Producción Radial</option>
-            <option value="Técnico en Registros Médicos y Estadísticas de Salud">Técnico en Registros Médicos y Estadísticas de Salud</option>
-            <option value="Técnico en Urgencias Médicas">Técnico en Urgencias Médicas</option>
-            <option value="Técnico Operario en Sistema Penal Acusatorio ">Técnico Operario en Sistema Penal Acusatorio </option>
-            <option value="Técnico Superior en Criminalística">Técnico Superior en Criminalística</option>
-          </select>
-		   <label for="bach">Other Bachelor or Post-Graduate Degree</label>
-      <input type="text" id="name" name="field_name2" required>
-    </div>
-		<br>
-		  
-		  <label for="master">Mastery 1<span style="color: red;">*</span></label>
-		  <select id="master" name="master" > <option value="">Please Select</option>
-            <option value="NO">NO</option>
-            <option value="Especialización en corrección de Textos">Especialización en corrección de Textos</option>
-            <option value="Maesetría en Accesibilidad Universal con Énfasis en Acceso al Entorno Físico">Maesetría en Accesibilidad Universal con Énfasis en Acceso al Entorno Físico</option>
-            <option value="Maesetría en Vivienda Social">Maesetría en Vivienda Social</option>
-            <option value="Maestería Centroamericana en Conservación y Gestión del Patrimonio Cultural para el Desarrollo">Maestería Centroamericana en Conservación y Gestión del Patrimonio Cultural para el Desarrollo</option>
-            <option value="Maestría de Educación en Población, Sexualidad y Desarrollo Humano con enfoque de Género">Maestría de Educación en Población, Sexualidad y Desarrollo Humano con enfoque de Género</option>
-            <option value="Maestría en Administración de Clínicas Odontológicas">Maestría en Administración de Clínicas Odontológicas</option>
-            <option value="Maestría en Administración de Empresas">Maestría en Administración de Empresas</option>
-            <option value="Maestría en Administración de Empresas Turísticas con énfasis en Dirección Hotelera">Maestría en Administración de Empresas Turísticas con énfasis en Dirección Hotelera</option>
-            <option value="Maestría en Administración de Recursos Humanos">Maestría en Administración de Recursos Humanos</option>
-            <option value="Maestría en Administración Educativa">Maestría en Administración Educativa</option>
-            <option value="Maestria en Administración Financiera&nbsp;">Maestria en Administración Financiera&nbsp;</option>
-            <option value="Maestría en Atención Primaria en Salud">Maestría en Atención Primaria en Salud</option>
-            <option value="Maestría en Cálculo y Técnicas Actuariales">Maestría en Cálculo y Técnicas Actuariales</option>
-            <option value="Maestría en Ciencias Agrícolas con Énfasis en Manejo de Recursos Naturales">Maestría en Ciencias Agrícolas con Énfasis en Manejo de Recursos Naturales</option>
-            <option value="Maestría en Ciencias Agrícolas con Énfasis en Producción Agrícola Sostenible">Maestría en Ciencias Agrícolas con Énfasis en Producción Agrícola Sostenible</option>
-            <option value="Maestría en Ciencias Agrícolas con Énfasis en Protección Vegetal">Maestría en Ciencias Agrícolas con Énfasis en Protección Vegetal</option>
-            <option value="Maestría en ciencias Biomédicas&nbsp;">Maestría en ciencias Biomédicas&nbsp;</option>
-            <option value="Maestría en Ciencias Clínicas con Especialización en Medicina Forense">Maestría en Ciencias Clínicas con Especialización en Medicina Forense</option>
-            <option value="Maestría en Ciencias de la Familia y del Desarrollo Comunitario con Énfasis en Ecología Familiar">Maestría en Ciencias de la Familia y del Desarrollo Comunitario con Énfasis en Ecología Familiar</option>
-            <option value="Maestría en Ciencias de la Familia y del Desarrollo Comunitario con Énfasis en Promoción Cuminitaria">Maestría en Ciencias de la Familia y del Desarrollo Comunitario con Énfasis en Promoción Cuminitaria</option>
-            <option value="Maestría en Ciencias Físicas">Maestría en Ciencias Físicas</option>
-            <option value="Maestría en Ciencias Pecuarias con Énfasis en Producción Animal">Maestría en Ciencias Pecuarias con Énfasis en Producción Animal</option>
-            <option value="Maestría en Ciencias Químicas">Maestría en Ciencias Químicas</option>
-            <option value="Maestría en Clínica y Cirugía de Caninos y Felinos">Maestría en Clínica y Cirugía de Caninos y Felinos</option>
-            <option value="Maestría en Contabilidad">Maestría en Contabilidad</option>
-            <option value="Maestría en Derecho Procesal">Maestría en Derecho Procesal</option>
-            <option value="Maestría en Didáctica">Maestría en Didáctica</option>
-            <option value="Maestría en Didáctica de las Ciencias Naturales">Maestría en Didáctica de las Ciencias Naturales</option>
-            <option value="Maestría en Diseño Creativo">Maestría en Diseño Creativo</option>
-            <option value="Maestría en Diseño y Visualización de Proyecto">Maestría en Diseño y Visualización de Proyecto</option>
-            <option value="Maestría en Docencia para la Educación Primaria">Maestría en Docencia para la Educación Primaria</option>
-            <option value="Maestría en Docencia Superior">Maestría en Docencia Superior</option>
-            <option value="Maestría en Docencia Superior Virtual">Maestría en Docencia Superior Virtual</option>
-            <option value="Maestría en Economía Monetaria y Bancaria">Maestría en Economía Monetaria y Bancaria</option>
-            <option value="Maestría en Economía para la Formulación, Evaluación y Preparación de Proyectos">Maestría en Economía para la Formulación, Evaluación y Preparación de Proyectos</option>
-            <option value="Maestría en Educación Inicial">Maestría en Educación Inicial</option>
-            <option value="Maestría en Educación con Especialización en Investigación y Docencia Superior">Maestría en Educación con Especialización en Investigación y Docencia Superior</option>
-            <option value="Maestría en Enfermería con énfasis en Cardiovascular">Maestría en Enfermería con énfasis en Cardiovascular</option>
-            <option value="Maestría en Enfermería con énfasis en Cuidado Crítico">Maestría en Enfermería con énfasis en Cuidado Crítico</option>
-            <option value="Maestría en Enfermería con énfasis en Nefrología">Maestría en Enfermería con énfasis en Nefrología</option>
-            <option value="Maestría en Enfermería con énfasis en Oncología">Maestría en Enfermería con énfasis en Oncología</option>
-            <option value="Maestría en Enfermería con énfasis en Urgencias y Emergencias">Maestría en Enfermería con énfasis en Urgencias y Emergencias</option>
-            <option value="Maestría en Enfermería en Salud Mental">Maestría en Enfermería en Salud Mental</option>
-            <option value="Maestría en Enfermería Gineco Obstétrica">Maestría en Enfermería Gineco Obstétrica</option>
-            <option value="Maestría en Enfermería Pediátrica">Maestría en Enfermería Pediátrica</option>
-            <option value="Maestría en Entornos Virtuales del Aprendizaje">Maestría en Entornos Virtuales del Aprendizaje</option>
-            <option value="Maestría en Epidemiología">Maestría en Epidemiología</option>
-            <option value="Maestría en Español">Maestría en Español</option>
-            <option value="Maestría en Estadística">Maestría en Estadística</option>
-            <option value="Maestría en Estadística Aplicada">Maestría en Estadística Aplicada</option>
-            <option value="Maestría en Gastronomía">Maestría en Gastronomía</option>
-            <option value="Maestría en Geografía con énfasis en Ordenamiento Territorial Ambiental.">Maestría en Geografía con énfasis en Ordenamiento Territorial Ambiental.</option>
-            <option value="Maestría en Geografía con énfasis en Planificación Urbana">Maestría en Geografía con énfasis en Planificación Urbana</option>
-            <option value="Maestría en Geografía Regional">Maestría en Geografía Regional</option>
-            <option value="Maestría en Gerencia de Operaciones y Logística Empresarial">Maestría en Gerencia de Operaciones y Logística Empresarial</option>
-            <option value="Maestría en Gestión de Información y Documentación.">Maestría en Gestión de Información y Documentación.</option>
-            <option value="Maestría en Gestión de los Servicios de Enfermería en Salud">Maestría en Gestión de los Servicios de Enfermería en Salud</option>
-            <option value="Maestría en Gestión y Negocios en la Industria Marítima">Maestría en Gestión y Negocios en la Industria Marítima</option>
-            <option value="Maestría en Gestión, Sostenibilidad y Calidad de las MIPYMES">Maestría en Gestión, Sostenibilidad y Calidad de las MIPYMES</option>
-            <option value="Maestría en Gerencia Pública con Énfasis en Alta Gerencia Pública">Maestría en Gerencia Pública con Énfasis en Alta Gerencia Pública</option>
-            <option value="Maestría en Historia de América Latina">Maestría en Historia de América Latina</option>
-            <option value="Maestría en Ingeniería de Auditoría y Gestión de Procesos">Maestría en Ingeniería de Auditoría y Gestión de Procesos</option>
-            <option value="Maestría en Ingeniería de Sistemas de Comunicaciones con Énfasis en Redesd de Datos">Maestría en Ingeniería de Sistemas de Comunicaciones con Énfasis en Redesd de Datos</option>
-            <option value="Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Ingeniería de Software">Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Ingeniería de Software</option>
-            <option value="Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Inteligencia Artificial">Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Inteligencia Artificial</option>
-            <option value="Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Sistemas de Información">Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Sistemas de Información</option>
-            <option value="Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Sistemas Telemáticos">Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Sistemas Telemáticos</option>
-            <option value="Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Sistemas Virtuales">Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Sistemas Virtuales</option>
-            <option value="Maestría en Investigación de Operaciones">Maestría en Investigación de Operaciones</option>
-            <option value="Maestría en Lingüistica aplicada al Inglés.">Maestría en Lingüistica aplicada al Inglés.</option>
-            <option value="Maestría en Lingüística del texto aplicada a la Enseñanza del Español.">Maestría en Lingüística del texto aplicada a la Enseñanza del Español.</option>
-            <option value="Maestría en Literatura Comparada">Maestría en Literatura Comparada</option>
-            <option value="Maestría en Matemática">Maestría en Matemática</option>
-            <option value="Maestría en Matemática Educativa">Maestría en Matemática Educativa</option>
-            <option value="Maestría en Mercadeo y Comercio Internacional">Maestría en Mercadeo y Comercio Internacional</option>
-            <option value="Maestría en Metodología de la Investigación Científica">Maestría en Metodología de la Investigación Científica</option>
-            <option value="Maestría en Microbiología Ambiental">Maestría en Microbiología Ambiental</option>
-            <option value="Maestría en Odontología Pediátrica">Maestría en Odontología Pediátrica</option>
-            <option value="Maestría en Ordenamiento Territorial para el Desarrollo Sostenible">Maestría en Ordenamiento Territorial para el Desarrollo Sostenible</option>
-            <option value="Maestría en Orientación y Consejería">Maestría en Orientación y Consejería</option>
-            <option value="Maestría en Ortodoncia">Maestría en Ortodoncia</option>
-            <option value="Maestría en Paisajismo y Gestión Ambiental con Énfasis en Manejo del Paisaje y Arquitectura">Maestría en Paisajismo y Gestión Ambiental con Énfasis en Manejo del Paisaje y Arquitectura</option>
-            <option value="Maestría en Periodoncia">Maestría en Periodoncia</option>
-            <option value="Maestría en Procesos">Maestría en Procesos</option>
-            <option value="Maestría en Psicopedagogía">Maestría en Psicopedagogía</option>
-            <option value="Maestría en Representación Gráfica con Énfasis en Diseño de Moda">Maestría en Representación Gráfica con Énfasis en Diseño de Moda</option>
-            <option value="Maestría en Representación Gráfica con Énfasis en Diseño Gráfico">Maestría en Representación Gráfica con Énfasis en Diseño Gráfico</option>
-            <option value="Maestría en Representación Gráfica con Énfasis en Diseño Industrial de Productos">Maestría en Representación Gráfica con Énfasis en Diseño Industrial de Productos</option>
-            <option value="Maestría en Restauradora Dental">Maestría en Restauradora Dental</option>
-            <option value="Maestría en Salud Pública">Maestría en Salud Pública</option>
-            <option value="Maestría en Trabajo social &quot;Política, Promoción e Intervención Familiar&quot;">Maestría en Trabajo social "Política, Promoción e Intervención Familiar"</option>
-            <option value="Maestría en traducción del inglés al Español y del Español al Inglés.">Maestría en traducción del inglés al Español y del Español al Inglés.</option>
-            <option value="Maestría en&nbsp;Lingüística&nbsp;del texto aplicada a la enseñanza del Español">Maestría en Lingüística del texto aplicada a la enseñanza del Español</option>
-            <option value="Maestrías en Fisiología del Ejercicio (MFE)">Maestrías en Fisiología del Ejercicio (MFE)</option>
-            <option value="Maestrías en Salud Pública">Maestrías en Salud Pública</option>
-            <option value="Maestrías Profesionales en Ciencias Clínicas">Maestrías Profesionales en Ciencias Clínicas</option>
-          </select>
-		  
-		   <label for="master">Mastery 2</label>
-		  <select id="master2" name="master2" > <option value="">Please Select</option> <option value="">Select</option>
-            <option value="NO">NO</option>
-            <option value="Especialización en corrección de Textos">Especialización en corrección de Textos</option>
-            <option value="Maesetría en Accesibilidad Universal con Énfasis en Acceso al Entorno Físico">Maesetría en Accesibilidad Universal con Énfasis en Acceso al Entorno Físico</option>
-            <option value="Maesetría en Vivienda Social">Maesetría en Vivienda Social</option>
-            <option value="Maestería Centroamericana en Conservación y Gestión del Patrimonio Cultural para el Desarrollo">Maestería Centroamericana en Conservación y Gestión del Patrimonio Cultural para el Desarrollo</option>
-            <option value="Maestría de Educación en Población, Sexualidad y Desarrollo Humano con enfoque de Género">Maestría de Educación en Población, Sexualidad y Desarrollo Humano con enfoque de Género</option>
-            <option value="Maestría en Administración de Clínicas Odontológicas">Maestría en Administración de Clínicas Odontológicas</option>
-            <option value="Maestría en Administración de Empresas">Maestría en Administración de Empresas</option>
-            <option value="Maestría en Administración de Empresas Turísticas con énfasis en Dirección Hotelera">Maestría en Administración de Empresas Turísticas con énfasis en Dirección Hotelera</option>
-            <option value="Maestría en Administración de Recursos Humanos">Maestría en Administración de Recursos Humanos</option>
-            <option value="Maestría en Administración Educativa">Maestría en Administración Educativa</option>
-            <option value="Maestria en Administración Financiera&nbsp;">Maestria en Administración Financiera&nbsp;</option>
-            <option value="Maestría en Atención Primaria en Salud">Maestría en Atención Primaria en Salud</option>
-            <option value="Maestría en Cálculo y Técnicas Actuariales">Maestría en Cálculo y Técnicas Actuariales</option>
-            <option value="Maestría en Ciencias Agrícolas con Énfasis en Manejo de Recursos Naturales">Maestría en Ciencias Agrícolas con Énfasis en Manejo de Recursos Naturales</option>
-            <option value="Maestría en Ciencias Agrícolas con Énfasis en Producción Agrícola Sostenible">Maestría en Ciencias Agrícolas con Énfasis en Producción Agrícola Sostenible</option>
-            <option value="Maestría en Ciencias Agrícolas con Énfasis en Protección Vegetal">Maestría en Ciencias Agrícolas con Énfasis en Protección Vegetal</option>
-            <option value="Maestría en ciencias Biomédicas&nbsp;">Maestría en ciencias Biomédicas&nbsp;</option>
-            <option value="Maestría en Ciencias Clínicas con Especialización en Medicina Forense">Maestría en Ciencias Clínicas con Especialización en Medicina Forense</option>
-            <option value="Maestría en Ciencias de la Familia y del Desarrollo Comunitario con Énfasis en Ecología Familiar">Maestría en Ciencias de la Familia y del Desarrollo Comunitario con Énfasis en Ecología Familiar</option>
-            <option value="Maestría en Ciencias de la Familia y del Desarrollo Comunitario con Énfasis en Promoción Cuminitaria">Maestría en Ciencias de la Familia y del Desarrollo Comunitario con Énfasis en Promoción Cuminitaria</option>
-            <option value="Maestría en Ciencias Físicas">Maestría en Ciencias Físicas</option>
-            <option value="Maestría en Ciencias Pecuarias con Énfasis en Producción Animal">Maestría en Ciencias Pecuarias con Énfasis en Producción Animal</option>
-            <option value="Maestría en Ciencias Químicas">Maestría en Ciencias Químicas</option>
-            <option value="Maestría en Clínica y Cirugía de Caninos y Felinos">Maestría en Clínica y Cirugía de Caninos y Felinos</option>
-            <option value="Maestría en Contabilidad">Maestría en Contabilidad</option>
-            <option value="Maestría en Derecho Procesal">Maestría en Derecho Procesal</option>
-            <option value="Maestría en Didáctica">Maestría en Didáctica</option>
-            <option value="Maestría en Didáctica de las Ciencias Naturales">Maestría en Didáctica de las Ciencias Naturales</option>
-            <option value="Maestría en Diseño Creativo">Maestría en Diseño Creativo</option>
-            <option value="Maestría en Diseño y Visualización de Proyecto">Maestría en Diseño y Visualización de Proyecto</option>
-            <option value="Maestría en Docencia para la Educación Primaria">Maestría en Docencia para la Educación Primaria</option>
-            <option value="Maestría en Docencia Superior">Maestría en Docencia Superior</option>
-            <option value="Maestría en Docencia Superior Virtual">Maestría en Docencia Superior Virtual</option>
-            <option value="Maestría en Economía Monetaria y Bancaria">Maestría en Economía Monetaria y Bancaria</option>
-            <option value="Maestría en Economía para la Formulación, Evaluación y Preparación de Proyectos">Maestría en Economía para la Formulación, Evaluación y Preparación de Proyectos</option>
-            <option value="Maestría en Educación Inicial">Maestría en Educación Inicial</option>
-            <option value="Maestría en Educación con Especialización en Investigación y Docencia Superior">Maestría en Educación con Especialización en Investigación y Docencia Superior</option>
-            <option value="Maestría en Enfermería con énfasis en Cardiovascular">Maestría en Enfermería con énfasis en Cardiovascular</option>
-            <option value="Maestría en Enfermería con énfasis en Cuidado Crítico">Maestría en Enfermería con énfasis en Cuidado Crítico</option>
-            <option value="Maestría en Enfermería con énfasis en Nefrología">Maestría en Enfermería con énfasis en Nefrología</option>
-            <option value="Maestría en Enfermería con énfasis en Oncología">Maestría en Enfermería con énfasis en Oncología</option>
-            <option value="Maestría en Enfermería con énfasis en Urgencias y Emergencias">Maestría en Enfermería con énfasis en Urgencias y Emergencias</option>
-            <option value="Maestría en Enfermería en Salud Mental">Maestría en Enfermería en Salud Mental</option>
-            <option value="Maestría en Enfermería Gineco Obstétrica">Maestría en Enfermería Gineco Obstétrica</option>
-            <option value="Maestría en Enfermería Pediátrica">Maestría en Enfermería Pediátrica</option>
-            <option value="Maestría en Entornos Virtuales del Aprendizaje">Maestría en Entornos Virtuales del Aprendizaje</option>
-            <option value="Maestría en Epidemiología">Maestría en Epidemiología</option>
-            <option value="Maestría en Español">Maestría en Español</option>
-            <option value="Maestría en Estadística">Maestría en Estadística</option>
-            <option value="Maestría en Estadística Aplicada">Maestría en Estadística Aplicada</option>
-            <option value="Maestría en Gastronomía">Maestría en Gastronomía</option>
-            <option value="Maestría en Geografía con énfasis en Ordenamiento Territorial Ambiental.">Maestría en Geografía con énfasis en Ordenamiento Territorial Ambiental.</option>
-            <option value="Maestría en Geografía con énfasis en Planificación Urbana">Maestría en Geografía con énfasis en Planificación Urbana</option>
-            <option value="Maestría en Geografía Regional">Maestría en Geografía Regional</option>
-            <option value="Maestría en Gerencia de Operaciones y Logística Empresarial">Maestría en Gerencia de Operaciones y Logística Empresarial</option>
-            <option value="Maestría en Gestión de Información y Documentación.">Maestría en Gestión de Información y Documentación.</option>
-            <option value="Maestría en Gestión de los Servicios de Enfermería en Salud">Maestría en Gestión de los Servicios de Enfermería en Salud</option>
-            <option value="Maestría en Gestión y Negocios en la Industria Marítima">Maestría en Gestión y Negocios en la Industria Marítima</option>
-            <option value="Maestría en Gerencia Pública con Énfasis en Alta Gerencia Pública">Maestría en Gerencia Pública con Énfasis en Alta Gerencia Pública</option>
-            <option value="Maestría en Gestión, Sostenibilidad y Calidad de las MIPYMES">Maestría en Gestión, Sostenibilidad y Calidad de las MIPYMES</option>
-            <option value="Maestría en Historia de América Latina">Maestría en Historia de América Latina</option>
-            <option value="Maestría en Ingeniería de Auditoría y Gestión de Procesos">Maestría en Ingeniería de Auditoría y Gestión de Procesos</option>
-            <option value="Maestría en Ingeniería de Sistemas de Comunicaciones con Énfasis en Redesd de Datos">Maestría en Ingeniería de Sistemas de Comunicaciones con Énfasis en Redesd de Datos</option>
-            <option value="Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Ingeniería de Software">Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Ingeniería de Software</option>
-            <option value="Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Inteligencia Artificial">Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Inteligencia Artificial</option>
-            <option value="Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Sistemas de Información">Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Sistemas de Información</option>
-            <option value="Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Sistemas Telemáticos">Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Sistemas Telemáticos</option>
-            <option value="Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Sistemas Virtuales">Maestría en Ingeniería de Sistemas de E-Learning con énfasis en Sistemas Virtuales</option>
-            <option value="Maestría en Investigación de Operaciones">Maestría en Investigación de Operaciones</option>
-            <option value="Maestría en Lingüistica aplicada al Inglés.">Maestría en Lingüistica aplicada al Inglés.</option>
-            <option value="Maestría en Lingüística del texto aplicada a la Enseñanza del Español.">Maestría en Lingüística del texto aplicada a la Enseñanza del Español.</option>
-            <option value="Maestría en Literatura Comparada">Maestría en Literatura Comparada</option>
-            <option value="Maestría en Matemática">Maestría en Matemática</option>
-            <option value="Maestría en Matemática Educativa">Maestría en Matemática Educativa</option>
-            <option value="Maestría en Mercadeo y Comercio Internacional">Maestría en Mercadeo y Comercio Internacional</option>
-            <option value="Maestría en Metodología de la Investigación Científica">Maestría en Metodología de la Investigación Científica</option>
-            <option value="Maestría en Microbiología Ambiental">Maestría en Microbiología Ambiental</option>
-            <option value="Maestría en Odontología Pediátrica">Maestría en Odontología Pediátrica</option>
-            <option value="Maestría en Ordenamiento Territorial para el Desarrollo Sostenible">Maestría en Ordenamiento Territorial para el Desarrollo Sostenible</option>
-            <option value="Maestría en Orientación y Consejería">Maestría en Orientación y Consejería</option>
-            <option value="Maestría en Ortodoncia">Maestría en Ortodoncia</option>
-            <option value="Maestría en Paisajismo y Gestión Ambiental con Énfasis en Manejo del Paisaje y Arquitectura">Maestría en Paisajismo y Gestión Ambiental con Énfasis en Manejo del Paisaje y Arquitectura</option>
-            <option value="Maestría en Periodoncia">Maestría en Periodoncia</option>
-            <option value="Maestría en Procesos">Maestría en Procesos</option>
-            <option value="Maestría en Psicopedagogía">Maestría en Psicopedagogía</option>
-            <option value="Maestría en Representación Gráfica con Énfasis en Diseño de Moda">Maestría en Representación Gráfica con Énfasis en Diseño de Moda</option>
-            <option value="Maestría en Representación Gráfica con Énfasis en Diseño Gráfico">Maestría en Representación Gráfica con Énfasis en Diseño Gráfico</option>
-            <option value="Maestría en Representación Gráfica con Énfasis en Diseño Industrial de Productos">Maestría en Representación Gráfica con Énfasis en Diseño Industrial de Productos</option>
-            <option value="Maestría en Restauradora Dental">Maestría en Restauradora Dental</option>
-            <option value="Maestría en Salud Pública">Maestría en Salud Pública</option>
-            <option value="Maestría en Trabajo social &quot;Política, Promoción e Intervención Familiar&quot;">Maestría en Trabajo social "Política, Promoción e Intervención Familiar"</option>
-            <option value="Maestría en traducción del inglés al Español y del Español al Inglés.">Maestría en traducción del inglés al Español y del Español al Inglés.</option>
-            <option value="Maestría en&nbsp;Lingüística&nbsp;del texto aplicada a la enseñanza del Español">Maestría en Lingüística del texto aplicada a la enseñanza del Español</option>
-            <option value="Maestrías en Fisiología del Ejercicio (MFE)">Maestrías en Fisiología del Ejercicio (MFE)</option>
-            <option value="Maestrías en Salud Pública">Maestrías en Salud Pública</option>
-            <option value="Maestrías Profesionales en Ciencias Clínicas">Maestrías Profesionales en Ciencias Clínicas</option>
-          </select>
-		  
-		   <label for="doc">Doctrate</label>
-		  <select id="doc" name="doc" > <option value="">Please Select</option>
-		   <option value="">Select</option>
-            <option value="NO">NO</option>
-            <option value="Doctorado en Ciencias Empresariales con Énfasis en Administración de Empresas">Doctorado en Ciencias Empresariales con Énfasis en Administración de Empresas</option>
-            <option value="Doctorado en Ciencias Empresariales con Énfasis en Contabilidad">Doctorado en Ciencias Empresariales con Énfasis en Contabilidad</option>
-            <option value="Doctorado en Educación">Doctorado en Educación</option>
-            <option value="Doctorado en Gestión Pública y Ciencias Empresariales">Doctorado en Gestión Pública y Ciencias Empresariales</option>
-            <option value="Doctorado en Humanidades y Ciencias Sociales.">Doctorado en Humanidades y Ciencias Sociales.</option>
-            <option value="Doctorado en Historia">Doctorado en Historia</option>
-            <option value="Doctorado en Lingüística Española">Doctorado en Lingüística Española</option>
-            <option value="Doctorado en Lingüística Inglesa">Doctorado en Lingüística Inglesa</option>
-            <option value="Doctorado en Enfermería con énfasis en Salud Internacional">Doctorado en Enfermería con énfasis en Salud Internacional</option>
-          </select>
-		   <label for="ex">Institute or Technical Training Center</label>
+        <br><br>
+<label for="ex">Institute orTechnical Training Center</label>
 		  <select id="ex" name="ex" > <option value="">Please Select</option>
 			<option value="">Select</option>
             <option value="NINGUNA">NONE</option>
@@ -734,8 +146,7 @@
           </select>
 		  
 		  	  <label for="message">Other vocational training centers</label>
-          <input type="text" id="name" name="field_name3" required>
-  <br> 
+                <input type="text" id="name" name="field_name1" required>
   <br>
    <label for="ed">What Professional Education and Training do you have?</label>
    <select id="ed" name="ed" > <option value="">Current Education/Training</option>
@@ -1606,9 +1017,8 @@
             </select>
 			 <h3>Add Diploma </h3>
 			  <label for="myfile">Attach Here</label>
-          <input type="file" id="myfile1" name="myfile" accept=".pdf" required><br><br>
+              <input type="file" id="myfile1" name="myfile" accept=".pdf" required><br><br>
               <div id="error-message1" style="display: none; color: red;">Please upload a PDF file</div>
-        
 			 <label for="job">Job Experience (Months) </label>
 			<input type="number" id="name" name="name" placeholder="e.g 23.."  required>
 			 <label for="myfile" style="min-height:7px; opacity:0.3">A year has 12 months </label>
@@ -1617,37 +1027,41 @@
 			  <label for="myfile">Attach Here</label>
               <input type="file" id="myfile2" name="myfile2" accept=".jpg,.jpeg,.png,.gif" data-max-size="10"><br>
               <label for="myfile" style="min-height:7px; opacity:0.3">10mb Maximum </label>
-              <div id="error-message2" style="display: none; color: red;">File must be a .jpg, .jpeg, .png, or .gif file</div>
-			  <br>
-          <h3>Attach personal photograph (FACE) <span style="color: red;">*</span></h3>
-          <label for="myfile">Attach Here</label>
-          <input type="file" id="myfile3" name="myfile3" accept=".jpg,.jpeg,.png,.gif" data-max-size="10"><br>
-          <label for="myfile" style="min-height:7px; opacity:0.3">Not necessarily formal. 10mb Maximum </label>
-          <div id="error-message3" style="display: none; color: red;">File must be a .jpg, .jpeg, .png, or .gif file</div>
-
-			<br>
-			<br>
-		<input type="submit" value="Submit">
+              <div id="error-message" style="display: none; color: red;">File must be a .jpg, .jpeg, .png, or .gif file</div>
+              
+			  <br><br>
+              <h3>Attach personal photograph (FACE) <span style="color: red;">*</span></h3>
+              <label for="myfile">Attach Here</label>
+              <input type="file" id="myfile3" name="myfile3" accept=".jpg,.jpeg,.png,.gif" data-max-size="10"><br>
+              <label for="myfile" style="min-height:7px; opacity:0.3">Not necessarily formal. 10mb Maximum </label>
+              <div id="error-message3" style="display: none; color: red;">File must be a .jpg, .jpeg, .png, or .gif file</div>
+              
+			   
+			<br><br>
+			 <input type="submit" value="Submit">
+			</div>
+		
   <br>
-  </div>
+  <br>
 </form>
-    <script>
-       function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        includedLanguages: 'en,es',
-        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
-        autoDisplay: false,
-        gaTrack: true,
-        gaId: 'UA-12345-6'
-    }, 'google_translate_element');
+<script>
+
+function googleTranslateElementInit() {
+ new google.translate.TranslateElement({
+     pageLanguage: 'en',
+     includedLanguages: 'en,es',
+     layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+     autoDisplay: false,
+     gaTrack: true,
+     gaId: 'UA-12345-6'
+ }, 'google_translate_element');
 }
 
 function changeLanguage(lang) {
-    var select = document.querySelector("#google_translate_element select");
-    var event = new Event("change");
-    select.value = lang;
-    select.dispatchEvent(event);
+ var select = document.querySelector("#google_translate_element select");
+ var event = new Event("change");
+ select.value = lang;
+ select.dispatchEvent(event);
 }
 const fileInput1 = document.getElementById('myfile1');
 const errorMessage1 = document.getElementById('error-message1');
@@ -1681,19 +1095,25 @@ fileInput2.addEventListener('change', function() {
     errorMessage2.style.display = 'none';
   }
 });
+const fileInput3 = document.getElementById('myfile3');
+const errorMessage3 = document.getElementById('error-message3');
 
-    </script>
-</body>	
+fileInput3.addEventListener('change', function() {
+  const file = this.files[0];
+  const ext = file.name.split('.').pop();
+  const maxSize = this.dataset.maxSize * 1024 * 1024;
+  const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+  
+  if (!allowedExtensions.includes(ext)) {
+    errorMessage3.style.display = 'block';
+    this.value = '';
+  } else if (file.size > maxSize) {
+    errorMessage3.style.display = 'block';
+    this.value = '';
+  } else {
+    errorMessage3.style.display = 'none';
+  }
+});
+
+ </script>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-

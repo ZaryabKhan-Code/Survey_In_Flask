@@ -22,12 +22,18 @@ CREATE TABLE user (
     PRIMARY KEY (id)
 );
 INSERT INTO user (id, first_name, last_name, id_card, current_email_address, address, city, province, country, is_filled)
-VALUES (1, 'John', 'Doe', '1-1234-12345', 'john.doe@example.com', '123 Main St', 'Anytown', 'Anyprovince', 'Anycountry', TRUE);
+VALUES (1, 'John', 'Doe', '1-1234-12375', 'john.doe@example.com', '123 Main St', 'Anytown', 'Anyprovince', 'Anycountry', TRUE);
+
+INSERT INTO user (id, first_name, last_name, id_card, current_email_address, address, city, province, country, is_filled)
+VALUES (3, 'John', 'Doe', '1-1234-12345', 'john.doe@example.com', '123 Main St', 'Anytown', 'Anyprovince', 'Anycountry', FALSE);
+
+INSERT INTO user (id, first_name, last_name, id_card, current_email_address, address, city, province, country, is_filled)
+VALUES (4, 'John', 'Doe', '1-1234-12555', 'john.doe@example.com', '123 Main St', 'Anytown', 'Anyprovince', 'Anycountry', FALSE);
 
 INSERT INTO user (id, first_name, last_name, id_card, current_email_address, address, city, province, country, is_filled)
 VALUES (2, 'Jane', 'Doe', 'PE-1234-123456', 'jane.doe@example.com', '456 Oak St', 'Othertown', 'Otherprovince', 'Othercountry', FALSE);
 select * from user;
-set Foregin
+
 truncate user;
 CREATE TABLE other_information (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -55,7 +61,7 @@ province varchar(200),
 country varchar(200)
 );
 CREATE TABLE disability (
-    id INTEGER PRIMARY KEY,
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
     user_id INTEGER,
     type VARCHAR(50),
     specific_disability VARCHAR(200),
@@ -64,6 +70,7 @@ CREATE TABLE disability (
 truncate user;
 truncate other_information;
 truncate disability;
+
 CREATE TABLE University (
     id INT NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
@@ -117,6 +124,18 @@ CREATE TABLE Diploma (
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
+
+CREATE TABLE institution (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    user_id INTEGER NOT NULL,
+    trainingcenter VARCHAR(200) NULL,
+    othervocationaltraining VARCHAR(200) NULL,
+    training VARCHAR(200) NULL,
+    addtraining VARCHAR(200) NULL,
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
+select * from institution;
+
 select * from Diploma;
 truncate Diploma;
 truncate technicalTraining;
@@ -126,5 +145,5 @@ truncate DegreeProgram;
 select * from Diploma;
 select * from disability;
 select * from admin;
-
 truncate admin;
+
