@@ -15,5 +15,10 @@ class Admin(UserMixin, db.Model):
         self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         self.is_confirmed = is_confirmed
 
+class Form(db.Model):
+    __tablename__='form'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    is_confirmed = db.Column(db.Boolean, default=False)    
+    message = db.Column(db.String(200))
 
 

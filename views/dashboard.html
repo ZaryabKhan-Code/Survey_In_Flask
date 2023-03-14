@@ -5,8 +5,18 @@
     <img src="{{url_for('static',filename='logo.jpg')}}" alt="Image Description">
     <br>
     <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search...">
-    <button onclick="generatePDF()">Generate PDF</button>
-    <button onclick="generateExcel()">Generate Excel</button>
+    <form action="/FormControl/" method="post">
+        <h5>Form Submission</h5>
+        <div class="alert alert-warning alert-dismissible">
+          {{ form.message }}
+        </div>
+        <div class="form-check form-switch form-check-inline">
+            <input class="form-check-input" type="submit" name="onoff" id="on" value="on">
+          </div>
+          <div class="form-check form-switch form-check-inline">
+            <input class="form-check-input" type="submit" name="onoff" id="off" value="off">
+          </div>          
+    </form>
     <br><br>
     <table id="dataTable">
         <thead>

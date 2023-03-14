@@ -147,7 +147,8 @@ def download_diploma(user_id, filename):
 def admin_dashboard():
     try:
         user = User.query.all()
-        return render_template('dashboard.html', user=user)
+        form = Form.query.first()
+        return render_template('dashboard.html', user=user,form=form)
     except Exception as e:
         message = f'Error'
         return render_template('dashboard.html', message=message)
@@ -314,3 +315,22 @@ def download_zip_excel(user_id):
     response.headers.set('Content-Disposition', 'attachment',
                          filename=f'UserRecord_{user.id_card}_Excel_Record.zip')
     return response
+
+
+@admin_router.route('/FormControl/', methods=['POST', 'GET'])
+@login_required
+def form1():
+    if request.method=='POST':
+        onoff = request.form['onoff']
+        form = Form.query.first()
+        if onoff == "on":
+            form.is_confirmed=True
+            form.message="Submission is on"
+            db.session.commit()
+            return redirect(url_for('admin_model.admin_dashboard'))
+        else: 
+            form.is_confirmed=False
+            form.message="Submission is off"
+            db.session.commit()
+            return redirect(url_for('admin_model.admin_dashboard'))
+    return redirect(url_for('admin_model.admin_dashboard'))

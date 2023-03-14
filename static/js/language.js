@@ -18,7 +18,9 @@ function changeLanguage(lang) {
 function showAlert() {
 alert("¿Estás segura de que quieres cancelar?");
 }
-
+function showAlert() {
+  alert("La presentación está desactivada ahora");
+  }
 $(document).ready(function() {
   $('#createRoomModal').modal('show');
 });

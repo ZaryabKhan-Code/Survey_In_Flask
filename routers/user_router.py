@@ -1,5 +1,6 @@
 from flask import *
 from config.config import *
+from models.admin_models import *
 from utils.user_utils import *
 user_router  = Blueprint('user_model',__name__,static_folder='static', template_folder='views')
 login_manager2.login_view = 'user_model.id_card_login'
@@ -11,7 +12,8 @@ def load_user(user_id):
 
 @user_router.route('/')
 def user_main_router():
-    return render_template('prompt.html'),404
+    form = Form.query.first()
+    return render_template('prompt.html',form = form),404
 
 @user_router.route('/validate_id_card', methods=['POST'])
 def validate_id_card_route():
@@ -58,21 +60,22 @@ def user_dashboard():
 @user_router.route('/user', methods=['POST', 'GET'])
 def id_card_login():
     try:
+        form = Form.query.first()
         if request.method == 'POST':
             id_card = request.form['id_card']
             user = get_user_id_card(id_card)
             if not user:
                 error_message = 'Not a Member of the Panamenista Party.'
-                return render_template('prompt.html', error_message=error_message)
+                return render_template('prompt.html', error_message=error_message,form=form)
             if user.is_filled:
                 error_message = 'Seems You already participated in the survey.'
-                return render_template('prompt.html', error_message=error_message)
+                return render_template('prompt.html', error_message=error_message,form=form)
             login_user(user)
             return redirect(url_for('user_model.user_dashboard'))
-        return render_template('prompt.html')
+        return render_template('prompt.html',form=form)
     except Exception as e:
         error_message = 'Access denied'
-        return render_template('prompt.html', error_message=error_message)
+        return render_template('prompt.html', error_message=error_message,form=form)
 
 
 
