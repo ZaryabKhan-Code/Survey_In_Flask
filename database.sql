@@ -7,7 +7,6 @@ email varchar (200),
 password varchar (200),
 is_confirmed Boolean
 );
-
 CREATE TABLE user (
     id INT NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(200),
@@ -69,7 +68,7 @@ CREATE TABLE disability (
 );
 truncate user;
 truncate other_information;
-truncate disability;
+select * from disability;
 
 CREATE TABLE University (
     id INT NOT NULL AUTO_INCREMENT,
@@ -114,16 +113,21 @@ CREATE TABLE TechnicalTraining (
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
 select * from technicalTraining;
-CREATE TABLE Diploma (
-    id INT NOT NULL AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    diploma_image LONGBLOB,
-    job_experience VARCHAR(200),
-    identity_proof LONGBLOB,
-    personal_photo LONGBLOB,
-    PRIMARY KEY (id),
-    FOREIGN KEY (user_id) REFERENCES user(id)
-);
+CREATE TABLE `diploma` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `job_experience` varchar (200),
+  `diploma_image` longblob,
+  `identity_proof` longblob,
+  `personal_photo` longblob,
+  `filename_diploma_image` varchar(100) DEFAULT NULL,
+  `filename_identity_proof` varchar(100) DEFAULT NULL,
+  `filename_personal_photo` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_diploma_user` (`user_id`),
+  CONSTRAINT `fk_diploma_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 CREATE TABLE institution (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -135,15 +139,16 @@ CREATE TABLE institution (
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
 select * from institution;
-
 select * from Diploma;
 truncate Diploma;
 truncate technicalTraining;
 truncate university;
 truncate vocationaltrainingcenters;
+select * from technicalTraining;
 truncate DegreeProgram;
 select * from Diploma;
+select * from vocationaltrainingcenters;
 select * from disability;
 select * from admin;
-truncate admin;
 
+truncate admin;

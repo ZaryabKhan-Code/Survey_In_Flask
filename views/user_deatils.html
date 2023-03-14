@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="{{ url_for('static', filename='js/language.js') }}"
+      defer
+    ></script>
+    <title>User Information</title>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .image-container {
+        max-width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: center;
+      }
+      a {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      a:hover {
+        background-color: #0056b3;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      body {
+        background-color: #f5f5f5;
+        font-family: "Montserrat", sans-serif;
+        font-size: 16px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+      .card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      .card-header {
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+      }
+      .card-header h3 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+        color: #4a148c;
+      }
+      .card-body p {
+        margin-bottom: 10px;
+        font-weight: 700;
+        color: #333;
+      }
+      .btn {
+        background-color: #4a148c;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .btn:hover {
+        background-color: #6a1b9a;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="google_translate_element" hidden></div>
+    <select onchange="changeLanguage(this.value)">
+      <option value="en">English</option>
+      <option value="es">Español</option>
+    </select>
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <h3>User Information</h3>
+        </div>
+        <div class="card-body">
+          <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+          <p>ID Card: {{ user.id_card }}</p>
+          <p>Email Address: {{ user.current_email_address }}</p>
+          <p>
+            Address: {{ user.address }}, {{ user.city }}, {{ user.province }},
+            {{ user.country }}
+          </p>
+        </div>
+      </div>
+      {% if user.is_filled == 0 %}
+      <div class="card">
+        <div class="card-header">
+          <h3 style="color: red">FORM NOT FILLED YET</h3>
+        </div>
+      </div>
+      {% else %}
+      <a href="/diplomas/{{user_id}}/download/PDF" class="btn">Generate PDF</a>
+      <a href="/diplomas/{{user_id}}/download/EXCEL" class="btn">Generate Excel</a><br /><br>
+      <div class="card">
+        <div class="card-header">
+          <h3>Other Information</h3>
+        </div>
+        <div class="card-body">
+          <p>Gender: {{ other_info.gender }}</p>
+          <p>Age: {{ other_info.edad }}</p>
+          <p>Date of Birth: {{ other_info.date_of_birth }}</p>
+          <p>Blood Type: {{ other_info.blood_type }}</p>
+          <p>Blood Donor: {{ other_info.blood_donor }}</p>
+          <p>Language: {{ other_info.language }}</p>
+          <p>Home Number: {{ other_info.home_number }}</p>
+          <p>Province: {{ other_info.province }}</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Disabilites Information</h3>
+        </div>
+        <div class="card-body">
+          <p>Type: {{ disability.type }}</p>
+          <p>Specific Disability: {{ disability.specific_disability }}</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>University Information</h3>
+        </div>
+        <div class="card-body">
+          {% if university.user_id == NoneType %}
+          <p style="color: red">User isn't enrolled</p>
+          {% else %}
+          <p>Student Center: {{university.student_center}}</p>
+          <p>
+            Bachelor or Technician 1: {{university.bachelor_or_technician_1}}
+          </p>
+          <p>
+            Bachelor or Technician 2: {{university.bachelor_or_technician_2}}
+          </p>
+          <p>Mastery 1: {{university.mastery_1}}</p>
+          <p>Mastery 2: {{university.mastery_2}}</p>
+          <p>Doctrate: {{university.doctrate}}</p>
+          <p>
+            Institute or Technical Training Center:
+            {{university.institute_or_technical_training_center}}
+          </p>
+          <p>
+            Professional Education and Training:
+            {{university.professional_education_and_training}}
+          </p>
+          <p>
+            Vocational Training or Additional Training:
+            {{university.vocational_training_or_additional_training}}
+          </p>
+          {% endif %} {% if degreeprogram.user_id == NoneType %}
+          <p>Degree: <span style="color: red">None</span></p>
+          {% else %}
+          <p>Degree: {{degreeprogram.degree}}</p>
+          {% endif %} {% if vocationaltrainingcenters.user_id == NoneType %}
+          <p>
+            Vocational Training Centers: <span style="color: red">None</span>
+          </p>
+          {% else %}
+          <p>
+            Vocational Training Centers:
+            {{vocationaltrainingcenters.Vocationaltrainingcenters}}
+          </p>
+          {% endif %} {% if technicalTraining.user_id == NoneType %}
+          <p>Technical Training: <span style="color: red">None</span></p>
+          {% else %}
+          <p>TechnicalTraining: {{technicalTraining.technicalTraining}}</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Institute Information</h3>
+        </div>
+        <div class="card-body">
+          {% if institution.user_id == NoneType %}
+          <p style="color: red">User isn't enrolled</p>
+          {% else %}
+          <p>Training Center: {{institution.trainingcenter}}</p>
+          <p>
+            Other Vocational Training: {{institution.othervocationaltraining}}
+          </p>
+          <p>Training: {{institution.training}}</p>
+          <p>Add Training: {{institution.addtraining}}</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Diploma PDF | IMG</h3>
+        </div>
+        <div class="card-body">
+          <a
+            href="{{ url_for('admin_model.download_diploma', user_id=diploma.user_id, filename=diploma.filename_diploma_image) }}"
+            target="_blank"
+            >Download PDF | IMG</a
+          >
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Indentity Photo</h3>
+        </div>
+        <div class="image-container">
+          <img
+            src="{{ url_for('admin_model.download_diploma', user_id=diploma.user_id, filename=diploma.filename_identity_proof) }}"
+            alt="Diploma Image"
+          />
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Personal Photo</h3>
+        </div>
+        <div class="image-container">
+          <img
+            src="{{ url_for('admin_model.download_diploma', user_id=diploma.user_id, filename=diploma.filename_personal_photo) }}"
+            alt="Diploma Image"
+          />
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>

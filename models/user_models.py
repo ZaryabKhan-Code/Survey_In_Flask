@@ -79,11 +79,14 @@ class Vocationaltrainingcenters(db.Model):
 
 class Diploma(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    diploma_image = db.Column(db.LargeBinary)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     job_experience = db.Column(db.String(200))
+    diploma_image = db.Column(db.LargeBinary)
     identity_proof = db.Column(db.LargeBinary)
     personal_photo = db.Column(db.LargeBinary)
+    filename_diploma_image = db.Column(db.String(100))
+    filename_identity_proof = db.Column(db.String(100))
+    filename_personal_photo = db.Column(db.String(100))
     
     
 class Institution(db.Model):

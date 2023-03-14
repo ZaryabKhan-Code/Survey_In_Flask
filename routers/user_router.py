@@ -65,7 +65,8 @@ def id_card_login():
                 error_message = 'Not a Member of the Panamenista Party.'
                 return render_template('prompt.html', error_message=error_message)
             if user.is_filled:
-                return render_template('thank_you.html')
+                error_message = 'Seems You already participated in the survey.'
+                return render_template('prompt.html', error_message=error_message)
             login_user(user)
             return redirect(url_for('user_model.user_dashboard'))
         return render_template('prompt.html')
@@ -189,14 +190,19 @@ def user_university_yes():
             db.session.add(record)
             db.session.commit()
             job_experience = request.form.get('name')
-            diploma_image = request.files.get('myfile')
-            identity_proof = request.files.get('myfile2')
-            personal_photo = request.files.get('myfile3')
-            diploma = Diploma(user_id=current_user.id, job_experience=job_experience)
-            diploma.diploma_image = bytes(save_file(diploma_image, 'diploma'), 'utf-8')
-            diploma.identity_proof = bytes(save_file(identity_proof, 'identity'), 'utf-8')
-            diploma.personal_photo = bytes(save_file(personal_photo, 'personal'), 'utf-8')
-            db.session.add(diploma)
+            diploma_image = request.files['myfile']
+            identity_proof = request.files['myfile2']
+            personal_photo = request.files['myfile3']
+            new_diploma = Diploma(user_id=current_user.id,
+                                job_experience=job_experience,
+                                diploma_image=diploma_image.read(),
+                                identity_proof=identity_proof.read(),
+                                personal_photo=personal_photo.read(),
+                                filename_diploma_image=diploma_image.filename,
+                                filename_identity_proof=identity_proof.filename,
+                                filename_personal_photo=personal_photo.filename)
+
+            db.session.add(new_diploma)
             db.session.commit()
             current_user.is_filled = True
             db.session.commit()
@@ -224,14 +230,19 @@ def user_university_no():
             db.session.add(Institution(**input_record))
             db.session.commit()
             job_experience = request.form.get('name')
-            diploma_image = request.files.get('myfile')
-            identity_proof = request.files.get('myfile2')
-            personal_photo = request.files.get('myfile3')
-            diploma = Diploma(user_id=current_user.id, job_experience=job_experience)
-            diploma.diploma_image = bytes(save_file(diploma_image, 'diploma'), 'utf-8')
-            diploma.identity_proof = bytes(save_file(identity_proof, 'identity'), 'utf-8')
-            diploma.personal_photo = bytes(save_file(personal_photo, 'personal'), 'utf-8')
-            db.session.add(diploma)
+            diploma_image = request.files['myfile']
+            identity_proof = request.files['myfile2']
+            personal_photo = request.files['myfile3']
+            new_diploma = Diploma(user_id=current_user.id,
+                                job_experience=job_experience,
+                                diploma_image=diploma_image.read(),
+                                identity_proof=identity_proof.read(),
+                                personal_photo=personal_photo.read(),
+                                filename_diploma_image=diploma_image.filename,
+                                filename_identity_proof=identity_proof.filename,
+                                filename_personal_photo=personal_photo.filename)
+            print(diploma_image.filename)
+            db.session.add(new_diploma)
             db.session.commit()
             current_user.is_filled = True
             db.session.commit()

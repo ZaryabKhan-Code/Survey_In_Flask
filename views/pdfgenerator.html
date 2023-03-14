@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Information</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      .image-container {
+        max-width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: center;
+      }
+      a {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      a:hover {
+        background-color: #0056b3;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      body {
+        background-color: #f5f5f5;
+        font-family: "Montserrat", sans-serif;
+        font-size: 13px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+      .card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+      }
+      .card-header {
+        border-bottom: 1px solid #ccc;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+      }
+      .card-header h3 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+        color: #4a148c;
+      }
+      .card-body p {
+        margin-bottom: 10px;
+        font-weight: 700;
+        color: #333;
+      }
+      .btn {
+        background-color: #4a148c;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .btn:hover {
+        background-color: #6a1b9a;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <h3>Información del Usuario</h3>
+        </div>
+        <div class="card-body">
+          <p>Nombre: {{ user.first_name }} {{ user.last_name }}</p>
+          <p>Cédula de identidad: {{ user.id_card }}</p>
+          <p>
+            Dirección de correo electrónico: {{ user.current_email_address }}
+          </p>
+          <p>
+            Dirección: {{ user.address }}, {{ user.city }}, {{ user.province }},
+            {{ user.country }}
+          </p>
+        </div>
+      </div>
+      {% if user.is_filled == 0 %}
+      <div class="card">
+        <div class="card-header">
+          <h3 style="color: red">FORMULARIO NO COMPLETADO</h3>
+        </div>
+      </div>
+      {% else %}
+      <div class="card">
+        <div class="card-header">
+          <h3>Otra Información</h3>
+        </div>
+        <div class="card-body">
+          <p>Género: {{ other_info.gender }}</p>
+          <p>Edad: {{ other_info.edad }}</p>
+          <p>Fecha de nacimiento: {{ other_info.date_of_birth }}</p>
+          <p>Tipo de sangre: {{ other_info.blood_type }}</p>
+          <p>Donante de sangre: {{ other_info.blood_donor }}</p>
+          <p>Idioma: {{ other_info.language }}</p>
+          <p>Número de casa: {{ other_info.home_number }}</p>
+          <p>Provincia: {{ other_info.province }}</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Información de discapacidades</h3>
+        </div>
+        <div class="card-body">
+          <p>Tipo: {{ disability.type }}</p>
+          <p>Discapacidad específica: {{ disability.specific_disability }}</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Información universitaria</h3>
+        </div>
+        <div class="card-body">
+          {% if university.user_id == NoneType %}
+          <p style="color: red">El usuario no está inscrito</p>
+          {% else %}
+          <p>Centro de estudiantes: {{university.student_center}}</p>
+          <p>
+            Licenciatura o Técnico 1: {{university.bachelor_or_technician_1}}
+          </p>
+          <p>
+            Licenciatura o Técnico 2: {{university.bachelor_or_technician_2}}
+          </p>
+          <p>Maestría 1: {{university.mastery_1}}</p>
+          <p>Maestría 2: {{university.mastery_2}}</p>
+          <p>Doctorado: {{university.doctrate}}</p>
+          <p>
+            Instituto o Centro de Formación Técnica:
+            {{university.institute_or_technical_training_center}}
+          </p>
+          <p>
+            Educación y capacitación profesional:
+            {{university.professional_education_and_training}}
+          </p>
+          <p>
+            Formación profesional o capacitación adicional:
+            {{university.vocational_training_or_additional_training}}
+          </p>
+          {% endif %} {% if technicalTraining.user_id == NoneType %}
+          <p>Formación técnica: <span style="color: red">Ninguna</span></p>
+          {% else %}
+          <p>Formación técnica: {{technicalTraining.technicalTraining}}</p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h3>Información del instituto</h3>
+        </div>
+        <div class="card-body">
+          {% if institution.user_id == NoneType %}
+          <p style="color: red">El usuario no está inscrito</p>
+          {% else %}
+          <p>Centro de formación: {{institution.trainingcenter}}</p>
+          <p>
+            Otra formación profesional: {{institution.othervocationaltraining}}
+          </p>
+          <p>Formación: {{institution.training}}</p>
+          <p>Añadir formación: {{institution.addtraining}}</p>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
