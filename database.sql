@@ -5,9 +5,14 @@ id int primary key auto_increment,
 is_confirmed Boolean,
 message varchar(200)
 );
+create table admin_confirmed(
+id int primary key auto_increment,
+admin_confirmed_on Boolean,
+);
+
+insert into admin_confirmed value(1,0);
 insert into form values(1,0,"Submission is off");
 select * from form;
-drop table form;
 create table admin(
 id int primary key auto_increment,
 username varchar (200),
@@ -41,7 +46,6 @@ INSERT INTO user (id, first_name, last_name, id_card, current_email_address, add
 VALUES (2, 'Jane', 'Doe', 'PE-1234-123456', 'jane.doe@example.com', '456 Oak St', 'Othertown', 'Otherprovince', 'Othercountry', FALSE);
 select * from user;
 
-truncate user;
 CREATE TABLE other_information (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
@@ -74,8 +78,6 @@ CREATE TABLE disability (
     specific_disability VARCHAR(200),
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
-truncate user;
-truncate other_information;
 select * from disability;
 
 CREATE TABLE University (
@@ -111,7 +113,6 @@ CREATE TABLE vocationaltrainingcenters (
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
-truncate University;
 select * from vocationaltrainingcenters;
 CREATE TABLE TechnicalTraining (
     id INT NOT NULL AUTO_INCREMENT,
@@ -130,7 +131,7 @@ CREATE TABLE Diploma (
     personal_photo LONGBLOB,
     filename_diploma_image varchar (100),
     filename_identity_proof varchar (100),
-    filename_personal_photo varchar (100), 
+    filename_personal_photo varchar (100),
     adddownload varchar (100),
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES user(id)
@@ -147,14 +148,9 @@ CREATE TABLE institution (
 );
 select * from institution;
 select * from Diploma;
-truncate Diploma;
-truncate technicalTraining;
-truncate university;
-truncate vocationaltrainingcenters;
 select * from technicalTraining;
-truncate DegreeProgram;
+
 select * from Diploma;
 select * from vocationaltrainingcenters;
 select * from disability;
 select * from admin;
-truncate admin;

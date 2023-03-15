@@ -18,5 +18,11 @@ class Form(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     is_confirmed = db.Column(db.Boolean, default=False)    
     message = db.Column(db.String(200))
+    
+class Admin_confirmed(db.Model):
+    __tablename__='admin_confirmed'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    admin_confirmed_on = db.Column(db.Boolean, default=False)    
+    
 
 

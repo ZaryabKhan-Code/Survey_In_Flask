@@ -17,6 +17,44 @@ login_manager2.login_view = 'admin_model.admin_login'
 def load_user(user_id):
     return LoadUserById(user_id)
 
+@admin_router.route('/registeradminaccount', methods=['GET', 'POST'])
+def admin_register_secrete():
+    form = Admin_confirmed.query.filter_by(id=1).first()
+    if form.admin_confirmed_on==True:
+        return redirect(url_for('admin_model.admin_login'))
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+
+        if not username or not email or not password or not confirm_password:
+            error_message = 'Please fill out all fields.'
+            return render_template('pass.html', error_message=error_message)
+
+        if password != confirm_password:
+            error_message = 'Passwords do not match.'
+            return render_template('pass.html', error_message=error_message)
+
+        existing_user = get_admin_username(username)
+        if existing_user:
+            error_message = 'That username is already taken.'
+            return render_template('pass.html', error_message=error_message)
+
+        existing_email = get_admin_email(email)
+        if existing_email:
+            error_message = 'That email is already taken.'
+            return render_template('pass.html', error_message=error_message)
+
+        new_user = Admin(username=username, email=email, password=password, is_confirmed=True)
+        db.session.add(new_user)
+        db.session.commit()
+        message = "Admin successful"
+        form.admin_confirmed_on = True
+        db.session.commit()
+        return render_template('pass.html', message=message,form=form)
+    return render_template('pass.html',form=form)
+
 
 @admin_router.route('/register', methods=['GET', 'POST'])
 @login_required
@@ -44,7 +82,6 @@ def admin_register():
         if existing_email:
             error_message = 'That email is already taken.'
             return render_template('register.html', error_message=error_message)
-
         new_user = Admin(username=username, email=email, password=password, is_confirmed=False)
         db.session.add(new_user)
         db.session.commit()
@@ -54,19 +91,6 @@ def admin_register():
     return render_template('register.html')
 
     
-def create_default_user():
-    email = 'admin@example.com'
-    password = 'password123'
-    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-    if not Admin.query.filter_by(email=email).first():
-        default_user = Admin(
-            username='admin',
-            email=email,
-            password=hashed_password,
-            is_confirmed=True
-        )
-        db.session.add(default_user)
-        db.session.commit()
 
 @admin_router.route('/admin', methods=['POST', 'GET'])
 def admin_login():
@@ -78,12 +102,12 @@ def admin_login():
             email = request.form['email']
             password = request.form['pass']
             user = get_admin_email(email)
-            if user and bcrypt.check_password_hash(user.password, password):
-                login_user(user)
-                return redirect(url_for('admin_model.admin_dashboard'))
             if not user.is_confirmed:
                 error_message = 'Your account has not been confirmed yet.'
                 return render_template('login.html', error_message=error_message, success_message=success_message)
+            if user and bcrypt.check_password_hash(user.password, password):
+                login_user(user)
+                return redirect(url_for('admin_model.admin_dashboard'))
             else:
                 error_message = 'Invalid email or password'
                 return render_template('login.html', error_message=error_message)
@@ -197,9 +221,9 @@ config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
 
 
 
-@admin_router.route('/diplomas/<int:user_id>/download/images')
+@admin_router.route('/diplomas/<int:user_id>/download/images/<string:uuid>')
 @login_required
-def download_zip_images(user_id):
+def download_zip_images(user_id,uuid):
     diploma = Diploma.query.filter_by(user_id=user_id).first()
     if diploma is None:
         abort(404, description='Diploma not found!')
@@ -223,7 +247,7 @@ def download_zip_images(user_id):
     response = make_response(zip_buffer.getvalue())
     response.headers.set('Content-Type', 'application/zip')
     response.headers.set('Content-Disposition', 'attachment',
-                         filename=f'UserRecord_{user.id_card}_Images_Record.zip')
+                         filename=f'UserRecord_{user.id_card}_Images_Record_{uuid}.zip')
     return response
 
 @admin_router.route('/diplomas/<int:user_id>/download/PDF')

@@ -93,10 +93,10 @@ def user_disability():
 @user_router.route('/user/disability/Yes',methods=['GET','POST'])
 def user_disabiltiy_yes():
     error = None
+    user = get_user_disability(current_user.id)
+    if user:
+        return redirect(url_for('user_model.user_education'))  
     try:
-        user = get_user_disability(current_user.id)
-        if user:
-            return redirect(url_for('user_model.user_education'))  
         if current_user.is_filled:
              return redirect(url_for('user_model.user_survey'))
         if request.method == 'POST':
@@ -116,10 +116,10 @@ def user_disabiltiy_yes():
 
 @user_router.route('/user/disability/No',methods=['GET','POST'])
 def user_disabiltiy_no():
-    user = get_user_disability (current_user.id)
+    user = get_user_disability(current_user.id)
+    if user:
+        return redirect(url_for('user_model.user_education'))  
     try:
-        if user:
-            return redirect(url_for('user_model.user_education'))  
         if current_user.is_filled:
                 return redirect(url_for('user_model.user_survey'))
         input_record = {
@@ -157,7 +157,7 @@ def user_education():
         logout_user()
         return redirect(url_for('user_model.id_card_login'))
     return render_template('prompt3.html'),404
-
+import uuid
 @user_router.route('/user/university',methods=['POST','GET'])
 @login_required
 def user_university_yes():
@@ -196,6 +196,7 @@ def user_university_yes():
             diploma_image = request.files['myfile']
             identity_proof = request.files['myfile2']
             personal_photo = request.files['myfile3']
+            unique_id = str(uuid.uuid4())
             new_diploma = Diploma(user_id=current_user.id,
                                 job_experience=job_experience,
                                 diploma_image=diploma_image.read(),
@@ -204,7 +205,7 @@ def user_university_yes():
                                 filename_diploma_image=diploma_image.filename,
                                 filename_identity_proof=identity_proof.filename,
                                 filename_personal_photo=personal_photo.filename,
-                                adddownload = '/diplomas/'f'{current_user.id}''/download/images')
+                                adddownload = '/diplomas/'f'{current_user.id}''/download/images/'f'{unique_id}')
 
             db.session.add(new_diploma)
             db.session.commit()
@@ -246,6 +247,7 @@ def user_university_no():
             diploma_image = request.files['myfile']
             identity_proof = request.files['myfile2']
             personal_photo = request.files['myfile3']
+            unique_id = str(uuid.uuid4())
             new_diploma = Diploma(user_id=current_user.id,
                                 job_experience=job_experience,
                                 diploma_image=diploma_image.read(),
@@ -254,7 +256,7 @@ def user_university_no():
                                 filename_diploma_image=diploma_image.filename,
                                 filename_identity_proof=identity_proof.filename,
                                 filename_personal_photo=personal_photo.filename,
-                                adddownload = '/diplomas/'f'{current_user.id}''/download/images')
+                                adddownload = '/diplomas/'f'{current_user.id}''/download/images/'f'{unique_id}')
             db.session.add(new_diploma)
             db.session.commit()
             current_user.is_filled = True
