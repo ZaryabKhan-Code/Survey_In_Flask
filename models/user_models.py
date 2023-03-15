@@ -87,6 +87,7 @@ class Diploma(db.Model):
     filename_diploma_image = db.Column(db.String(100))
     filename_identity_proof = db.Column(db.String(100))
     filename_personal_photo = db.Column(db.String(100))
+    adddownload=db.Column(db.String(100))
     
     
 class Institution(db.Model):

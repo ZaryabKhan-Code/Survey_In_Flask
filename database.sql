@@ -1,5 +1,13 @@
 create database SurveyForm;
 use SurveyForm;
+create table form(
+id int primary key auto_increment,
+is_confirmed Boolean,
+message varchar(200)
+);
+insert into form values(1,0,"Submission is off");
+select * from form;
+drop table form;
 create table admin(
 id int primary key auto_increment,
 username varchar (200),
@@ -113,21 +121,19 @@ CREATE TABLE TechnicalTraining (
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
 select * from technicalTraining;
-CREATE TABLE `diploma` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `job_experience` varchar (200),
-  `diploma_image` longblob,
-  `identity_proof` longblob,
-  `personal_photo` longblob,
-  `filename_diploma_image` varchar(100) DEFAULT NULL,
-  `filename_identity_proof` varchar(100) DEFAULT NULL,
-  `filename_personal_photo` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_diploma_user` (`user_id`),
-  CONSTRAINT `fk_diploma_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
+CREATE TABLE Diploma (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    diploma_image LONGBLOB,
+    job_experience VARCHAR(200),
+    identity_proof LONGBLOB,
+    personal_photo LONGBLOB,
+    filename_diploma_image varchar (100),
+    filename_identity_proof varchar (100),
+    filename_personal_photo varchar (100), 
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES user(id)
+);
 
 CREATE TABLE institution (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -150,5 +156,4 @@ select * from Diploma;
 select * from vocationaltrainingcenters;
 select * from disability;
 select * from admin;
-
 truncate admin;

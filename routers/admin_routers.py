@@ -9,12 +9,11 @@ import bcrypt
 import pdfkit
 
 
-admin_router = Blueprint('admin_model', __name__,
-                         static_folder='static', template_folder='views')
-login_manager.login_view = 'admin_model.admin_login'
+admin_router = Blueprint('admin_model', __name__,static_folder='static', template_folder='views')
+login_manager2.login_view = 'admin_model.admin_login'
 
 
-@login_manager.user_loader
+@login_manager2.user_loader
 def load_user(user_id):
     return LoadUserById(user_id)
 
@@ -46,8 +45,7 @@ def admin_register():
             error_message = 'That email is already taken.'
             return render_template('register.html', error_message=error_message)
 
-        new_user = Admin(username=username, email=email,
-                         password=password, is_confirmed=False)
+        new_user = Admin(username=username, email=email, password=password, is_confirmed=False)
         db.session.add(new_user)
         db.session.commit()
         send_verification_email(email, username)
@@ -121,6 +119,7 @@ def activate():
 
 
 @admin_router.route('/diplomas/<int:user_id>/<filename>', methods=['GET'])
+@login_required
 def download_diploma(user_id, filename):
     diploma = Diploma.query.filter_by(user_id=user_id).first()
     if diploma is None:
@@ -182,16 +181,36 @@ path_wkhtmltopdf = r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
 config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
 
 
-@admin_router.route('/pdf')
-@login_required
-def generate_pdf():
-    html = render_template('index.html')
-    pdf = pdfkit.from_string(html, False, configuration=config)
-    response = make_response(pdf)
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'inline; filename=output.pdf'
-    return response
 
+
+@admin_router.route('/diplomas/<int:user_id>/download/images')
+@login_required
+def download_zip_images(user_id):
+    diploma = Diploma.query.filter_by(user_id=user_id).first()
+    if diploma is None:
+        abort(404, description='Diploma not found!')
+
+    user = User.query.filter_by(id=user_id).first()
+    files = [
+        (f'{user.first_name}_diploma_File_' +
+         diploma.filename_diploma_image, diploma.diploma_image),
+        (f'{user.first_name}_identity_proof_' +
+         diploma.filename_identity_proof, diploma.identity_proof),
+        (f'{user.first_name}_personal_photo_' +
+         diploma.filename_personal_photo, diploma.personal_photo)
+    ]
+
+    zip_buffer = io.BytesIO()
+    with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
+        for filename, data in files:
+            zip_file.writestr(filename, data)
+
+    zip_buffer.seek(0)
+    response = make_response(zip_buffer.getvalue())
+    response.headers.set('Content-Type', 'application/zip')
+    response.headers.set('Content-Disposition', 'attachment',
+                         filename=f'UserRecord_{user.id_card}_Images_Record.zip')
+    return response
 
 @admin_router.route('/diplomas/<int:user_id>/download/PDF')
 @login_required
@@ -249,71 +268,116 @@ def download_zip_pdf(user_id):
 @admin_router.route('/diplomas/<int:user_id>/download/EXCEL', methods=['POST', 'GET'])
 @login_required
 def download_zip_excel(user_id):
-    user = User.query.filter_by(id=user_id).first()
-    other_info = OtherInformation.query.filter_by(user_id=user_id).first()
-    disability = Disability.query.filter_by(user_id=user_id).first()
-    university = University.query.filter_by(user_id=user_id).first()
-    degreeprogram = DegreeProgram.query.filter_by(user_id=user_id).first()
-    vocationaltrainingcenters = Vocationaltrainingcenters.query.filter_by(
-        user_id=user_id).first()
-    institution = Institution.query.filter_by(user_id=user_id).first()
-    technicalTraining = TechnicalTraining.query.filter_by(
-        user_id=user_id).first()
-    diploma = Diploma.query.filter_by(user_id=user_id).first()
+        user = User.query.filter_by(id=user_id).first()
+        info = OtherInformation.query.filter_by(user_id=user_id).first()
+        dis = Disability.query.filter_by(user_id=user_id).first()
+        uni = University.query.filter_by(user_id=user_id).first()
+        deg = DegreeProgram.query.filter_by(user_id=user_id).first()
+        voc = Vocationaltrainingcenters.query.filter_by(
+            user_id=user_id).first()
+        inst = Institution.query.filter_by(user_id=user_id).first()
+        tran = TechnicalTraining.query.filter_by(
+            user_id=user_id).first()
+        diploma = Diploma.query.filter_by(user_id=user_id).first()
+        wb = Workbook()
+        ws = wb.active
+        headers = ['Nombre', 'Apellido', 'Cédula de Identidad', 'Correo Electrónico Actual', 'Dirección', 'Ciudad', 'Provincia', 'País', '¿Está completo?', 'Género', 'Edad', 'Fecha de Nacimiento', 'Tipo de Sangre', 'Donante de Sangre', 'Idioma', 'Número de Teléfono', 'Provincia', 'Tipo de Discapacidad', 'Discapacidad Específica', 'Centro de Formación', 'Otro Entrenamiento Vocacional', 'Entrenamiento','Entrenamiento Adicional', 'Centro de Estudiantes', 'Licenciatura o Técnico 1', 'Licenciatura o Técnico 2', 'Maestría 1', 'Maestría 2', 'Doctorado' , 'Instituto o Centro de Formación Técnica', 'Educación y Entrenamiento Profesional', 'Entrenamiento Vocacional o Adicional', 'Título', 'Entrenamiento Técnico', 'Centros de Formación Vocacional']
+
+        ws.append(headers)
+        row = [user.first_name, user.last_name, user.id_card, user.current_email_address, user.address, user.city, user.province, user.country, str(user.is_filled), info.gender, str(info.edad), info.date_of_birth, info.blood_type, info.blood_donor, info.language, info.home_number, info.province]
+        row.append(dis.type or 'Ninguna')
+        row.append(dis.specific_disability or 'Ninguna')
+        row.append(inst.trainingcenter or 'Ninguno')
+        row.append(inst.othervocationaltraining or 'Ninguno')
+        row.append(inst.training or 'Ninguno')
+        row.append(inst.addtraining or 'Ninguno')
+        row.append(uni.student_center or 'Ninguno')
+        row.append(uni.bachelor_or_technician_1 or 'Ninguno')
+        row.append(uni.bachelor_or_technician_2 or 'Ninguno')
+        row.append(uni.mastery_1 or 'Ninguno')
+        row.append(uni.mastery_2 or 'Ninguno')
+        row.append(uni.doctrate or 'Ninguno')
+        row.append(uni.institute_or_technical_training_center or 'Ninguno')
+        row.append(uni.professional_education_and_training or 'Ninguno')
+        row.append(uni.vocational_training_or_additional_training or 'Ninguno')
+        row.append(deg.degree or 'Ninguno')
+        row.append(tran.technicalTraining or 'Ninguno')
+        row.append(voc.Vocationaltrainingcenters or 'Ninguno')
+        ws.append(row)
+
+        excel_buffer = io.BytesIO()
+        wb.save(excel_buffer)
+        excel_buffer.seek(0)
+
+        zip_buffer = io.BytesIO()
+        with zipfile.ZipFile(zip_buffer, mode='w') as zip_file:
+            zip_file.writestr(
+                f'{user.first_name}_Information.xlsx', excel_buffer.getvalue())
+            for file_name, file_data in [
+                (f'{user.first_name}_diploma_File_' +
+                diploma.filename_diploma_image, diploma.diploma_image),
+                (f'{user.first_name}_identity_proof_' +
+                diploma.filename_identity_proof, diploma.identity_proof),
+                (f'{user.first_name}_personal_photo_' +
+                diploma.filename_personal_photo, diploma.personal_photo)
+            ]:
+                zip_file.writestr(file_name, file_data)
+
+        zip_buffer.seek(0)
+
+        response = make_response(zip_buffer.getvalue())
+        response.headers.set('Content-Type', 'application/zip')
+        response.headers.set('Content-Disposition', 'attachment',
+                            filename=f'UserRecord_{user.id_card}_Excel_Record.zip')
+        return response
+
+from flask import make_response
+from openpyxl import Workbook
+
+@admin_router.route('/diplomas/download/EXCEL', methods=['POST', 'GET'])
+@login_required
+def download_zip_excel_globally():
+    users = db.session.query(User, OtherInformation, Disability,Institution,University,DegreeProgram,TechnicalTraining,Vocationaltrainingcenters,Diploma).join(OtherInformation).join(Disability).join(Institution).join(University).join(DegreeProgram).join(TechnicalTraining).join(Vocationaltrainingcenters).join(Diploma).all()
 
     wb = Workbook()
     ws = wb.active
-    ws['A1'] = 'User Information'
-    ws.merge_cells('A1:B1')
-    ws['A1'].font = Font(size=16, bold=True)
-    ws['A1'].alignment = Alignment(horizontal='center')
 
-    # Set the font, alignment, and border for the label cells
-    label_font = Font(bold=True)
-    label_alignment = Alignment(horizontal='right', wrap_text=True)
-    label_border = Border(bottom=Side(style='thin'))
-
-    # Set the font and border for the value cells
-    value_font = Font()
-    value_border = Border(bottom=Side(style='thin'))
-
-    # Populate the user information cells
-    user_info = [('A2', 'First Name', user.first_name),             ('A3', 'Last Name', user.last_name),             ('A4', 'ID Card', user.id_card),             ('A5', 'Current Email Address', user.current_email_address),
-                 ('A6', 'Address', user.address),             ('A7', 'City', user.city),             ('A8', 'Province', user.province),             ('A9', 'Country', user.country),             ('A10', 'Is Filled', user.is_filled)]
-    for cell, label, value in user_info:
-        ws[cell] = label
-        ws[cell].font = label_font
-        ws[cell].alignment = label_alignment
-        ws[cell].border = label_border
-
-        ws.cell(row=ws[cell].row, column=2, value=value)
-        ws.cell(row=ws[cell].row, column=2).font = value_font
-        ws.cell(row=ws[cell].row, column=2).border = value_border
+    headers = ['Nombre', 'Apellido', 'Cédula de Identidad', 'Correo Electrónico Actual', 'Dirección', 'Ciudad', 'Provincia', 'País', '¿Está completo?', 'Género', 'Edad', 'Fecha de Nacimiento', 'Tipo de Sangre', 'Donante de Sangre', 'Idioma', 'Número de Teléfono', 'Provincia', 'Tipo de Discapacidad', 'Discapacidad Específica', 'Centro de Formación', 'Otro Entrenamiento Vocacional', 'Entrenamiento','Entrenamiento Adicional', 'Centro de Estudiantes', 'Licenciatura o Técnico 1', 'Licenciatura o Técnico 2', 'Maestría 1', 'Maestría 2', 'Doctorado' , 'Instituto o Centro de Formación Técnica', 'Educación y Entrenamiento Profesional', 'Entrenamiento Vocacional o Adicional', 'Título', 'Entrenamiento Técnico', 'Centros de Formación Vocacional', 'Descargar archivo']
+    ws.append(headers)
+    for user, info, dis, inst, uni, deg, tran, voc ,dip in users:
+        row = [user.first_name, user.last_name, user.id_card, user.current_email_address, user.address, user.city, user.province, user.country, str(user.is_filled), info.gender, str(info.edad), info.date_of_birth, info.blood_type, info.blood_donor, info.language, info.home_number, info.province]
+        row.append(dis.type or 'Ninguna')
+        row.append(dis.specific_disability or 'Ninguna')
+        row.append(inst.trainingcenter or 'Ninguno')
+        row.append(inst.othervocationaltraining or 'Ninguno')
+        row.append(inst.training or 'Ninguno')
+        row.append(inst.addtraining or 'Ninguno')
+        row.append(uni.student_center or 'Ninguno')
+        row.append(uni.bachelor_or_technician_1 or 'Ninguno')
+        row.append(uni.bachelor_or_technician_2 or 'Ninguno')
+        row.append(uni.mastery_1 or 'Ninguno')
+        row.append(uni.mastery_2 or 'Ninguno')
+        row.append(uni.doctrate or 'Ninguno')
+        row.append(uni.institute_or_technical_training_center or 'Ninguno')
+        row.append(uni.professional_education_and_training or 'Ninguno')
+        row.append(uni.vocational_training_or_additional_training or 'Ninguno')
+        row.append(deg.degree or 'Ninguno')
+        row.append(tran.technicalTraining or 'Ninguno')
+        row.append(voc.Vocationaltrainingcenters or 'Ninguno')
+        technical_training_link = dip.adddownload or 'Ninguno'
+        if technical_training_link != 'Ninguno':
+            technical_training_link = f'=HYPERLINK("http://127.0.0.1:5000{technical_training_link}","https://127.0.0.1:5000{technical_training_link}")'
+        row.append(technical_training_link)
+        ws.append(row)
+    
 
     excel_buffer = io.BytesIO()
     wb.save(excel_buffer)
     excel_buffer.seek(0)
 
-    zip_buffer = io.BytesIO()
-    with zipfile.ZipFile(zip_buffer, mode='w') as zip_file:
-        zip_file.writestr(
-            f'{user.first_name}_Information.xlsx', excel_buffer.getvalue())
-        for file_name, file_data in [
-            (f'{user.first_name}_diploma_File_' +
-             diploma.filename_diploma_image, diploma.diploma_image),
-            (f'{user.first_name}_identity_proof_' +
-             diploma.filename_identity_proof, diploma.identity_proof),
-            (f'{user.first_name}_personal_photo_' +
-             diploma.filename_personal_photo, diploma.personal_photo)
-        ]:
-            zip_file.writestr(file_name, file_data)
-
-    zip_buffer.seek(0)
-
-    response = make_response(zip_buffer.getvalue())
-    response.headers.set('Content-Type', 'application/zip')
-    response.headers.set('Content-Disposition', 'attachment',
-                         filename=f'UserRecord_{user.id_card}_Excel_Record.zip')
+    response = make_response(excel_buffer.getvalue())
+    response.headers['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    response.headers['Content-Disposition'] = 'attachment; filename=registro_global_español.xlsx'
     return response
 
 

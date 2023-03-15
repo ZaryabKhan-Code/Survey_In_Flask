@@ -180,17 +180,17 @@ def user_university_yes():
             db.session.add(University(**input_record))
             db.session.commit()
             field_names = request.form.get('field_name')
-            record = DegreeProgram(user_id=current_user.id,degree=field_names)
-            db.session.add(record)
+            record1 = DegreeProgram(user_id=current_user.id,degree=field_names)
+            db.session.add(record1)
             db.session.commit()
             
             field_names2 = request.form.get('field_name2')
-            record = TechnicalTraining(user_id=current_user.id,technicalTraining=field_names2)
-            db.session.add(record)
+            record2 = TechnicalTraining(user_id=current_user.id,technicalTraining=field_names2)
+            db.session.add(record2)
             db.session.commit()
             field_names3 = request.form.getlist('field_name3')
-            record = Vocationaltrainingcenters(user_id=current_user.id,Vocationaltrainingcenters=field_names3)
-            db.session.add(record)
+            record3= Vocationaltrainingcenters(user_id=current_user.id,Vocationaltrainingcenters=field_names3)
+            db.session.add(record3)
             db.session.commit()
             job_experience = request.form.get('name')
             diploma_image = request.files['myfile']
@@ -203,11 +203,21 @@ def user_university_yes():
                                 personal_photo=personal_photo.read(),
                                 filename_diploma_image=diploma_image.filename,
                                 filename_identity_proof=identity_proof.filename,
-                                filename_personal_photo=personal_photo.filename)
+                                filename_personal_photo=personal_photo.filename,
+                                adddownload = '/diplomas/'f'{current_user.id}''/download/images')
 
             db.session.add(new_diploma)
             db.session.commit()
             current_user.is_filled = True
+            db.session.commit()
+            input_record2 = {
+                    'user_id': current_user.id,
+                    'trainingcenter': None,
+                    'othervocationaltraining': None,
+                    'training':None,
+                    'addtraining':None
+                } 
+            db.session.add(Institution(**input_record2))
             db.session.commit()
             return redirect(url_for('user_model.user_survey'))
     except Exception as e:
@@ -243,11 +253,34 @@ def user_university_no():
                                 personal_photo=personal_photo.read(),
                                 filename_diploma_image=diploma_image.filename,
                                 filename_identity_proof=identity_proof.filename,
-                                filename_personal_photo=personal_photo.filename)
-            print(diploma_image.filename)
+                                filename_personal_photo=personal_photo.filename,
+                                adddownload = '/diplomas/'f'{current_user.id}''/download/images')
             db.session.add(new_diploma)
             db.session.commit()
             current_user.is_filled = True
+            db.session.commit()
+            input_record2 = {
+                    'user_id': current_user.id,
+                    'student_center': None,
+                    'bachelor_or_technician_1': None,
+                    'bachelor_or_technician_2':None,
+                    'mastery_1':None,
+                    'mastery_2':None,
+                    'doctrate':None,
+                    'institute_or_technical_training_center':None,
+                    'professional_education_and_training':None,
+                    'vocational_training_or_additional_training':None
+                } 
+            db.session.add(University(**input_record2))
+            db.session.commit()
+            record = DegreeProgram(user_id=current_user.id,degree=None)
+            db.session.add(record)
+            record2 = TechnicalTraining(user_id=current_user.id,technicalTraining=None)
+            db.session.add(record2)
+            db.session.commit()
+            record3= Vocationaltrainingcenters(user_id=current_user.id,Vocationaltrainingcenters=None)
+            db.session.add(record3)
+            db.session.commit()
             db.session.commit()
             return redirect(url_for('user_model.user_survey'))
     except Exception as e:
