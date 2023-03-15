@@ -131,6 +131,7 @@ CREATE TABLE Diploma (
     filename_diploma_image varchar (100),
     filename_identity_proof varchar (100),
     filename_personal_photo varchar (100), 
+    adddownload varchar (100),
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
