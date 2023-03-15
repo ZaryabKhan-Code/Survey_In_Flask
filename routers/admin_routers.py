@@ -1,11 +1,11 @@
 from openpyxl.styles import Font, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 from openpyxl import Workbook
+from flask_bcrypt import check_password_hash
 from flask import *
 from config.config import *
 from utils.admin_utils import *
 from models.user_models import *
-import bcrypt
 import pdfkit
 
 
@@ -53,6 +53,20 @@ def admin_register():
         return render_template('register.html', message=message)
     return render_template('register.html')
 
+    
+def create_default_user():
+    email = 'admin@example.com'
+    password = 'password123'
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+    if not Admin.query.filter_by(email=email).first():
+        default_user = Admin(
+            username='admin',
+            email=email,
+            password=hashed_password,
+            is_confirmed=True
+        )
+        db.session.add(default_user)
+        db.session.commit()
 
 @admin_router.route('/admin', methods=['POST', 'GET'])
 def admin_login():
@@ -62,21 +76,21 @@ def admin_login():
     try:
         if request.method == 'POST':
             email = request.form['email']
-            password = request.form['password']
+            password = request.form['pass']
             user = get_admin_email(email)
-            if not user:
-                error_message = 'Incorrect email or password.'
+            if user and bcrypt.check_password_hash(user.password, password):
+                login_user(user)
+                return redirect(url_for('admin_model.admin_dashboard'))
+            if not user.is_confirmed:
+                error_message = 'Your account has not been confirmed yet.'
                 return render_template('login.html', error_message=error_message, success_message=success_message)
-            if not bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8'):
-                error_message = 'Incorrect email or password.'
-                return render_template('login.html', error_message=error_message, success_message=success_message)
-            login_user(user)
-            return redirect(url_for('admin_model.admin_dashboard'))
+            else:
+                error_message = 'Invalid email or password'
+                return render_template('login.html', error_message=error_message)
         return render_template('login.html', success_message=success_message)
     except Exception as e:
-        error_message = 'Login access denied'
+        error_message = f'Login access denied {e}'
         return render_template('login.html', error_message=error_message, success_message=success_message)
-
 
 @admin_router.route('/check_email/<email>')
 @login_required

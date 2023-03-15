@@ -1,6 +1,4 @@
 from config.config import *
-import bcrypt
-
 class Admin(UserMixin, db.Model):
     __tablename__ = 'admin'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -12,7 +10,7 @@ class Admin(UserMixin, db.Model):
     def __init__(self, username, email, password,is_confirmed):
         self.username = username
         self.email = email
-        self.password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
         self.is_confirmed = is_confirmed
 
 class Form(db.Model):

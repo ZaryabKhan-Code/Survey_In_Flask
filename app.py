@@ -1,7 +1,7 @@
 from flask import *
 from config.config import *
-from routers.admin_routers import admin_router
-from routers.user_router import user_router
+from routers.admin_routers import admin_router,create_default_user
+from routers.user_router import  *
 from utils.admin_utils import *
 app = Flask(__name__, static_folder='static', template_folder='views')
 import os

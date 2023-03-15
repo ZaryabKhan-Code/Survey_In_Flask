@@ -65,15 +65,3 @@ def send_verification_email(email,name):
     msg.html = render_template('verify_email.html', url=url,name=name)
     mail.send(msg)
     
-    
-def create_default_user():
-    if Admin.query.filter_by(email='admin@example.com').first() is None:
-        default_user = Admin(
-            username='admin',
-            email='admin@example.com',
-            password=bcrypt.hashpw(b'password', bcrypt.gensalt()).decode('utf-8'),
-            is_confirmed=True
-        )
-        db.session.add(default_user)
-        db.session.commit()
-
